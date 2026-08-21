@@ -23,3 +23,5 @@ Installer/Output/
 *.log
 %LOCALAPPDATA%/
 logs/
+
+TestResults/
