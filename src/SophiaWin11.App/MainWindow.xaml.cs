@@ -1,11 +1,13 @@
+using SophiaWin11.App.ViewModels;
 using Wpf.Ui.Controls;
 
 namespace SophiaWin11.App;
 
 public partial class MainWindow : FluentWindow
 {
-    public MainWindow()
+    public MainWindow(MainViewModel viewModel)
     {
         InitializeComponent();
+        DataContext = viewModel;
     }
 }

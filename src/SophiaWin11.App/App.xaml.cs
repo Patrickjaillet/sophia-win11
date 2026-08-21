@@ -2,6 +2,8 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using SophiaWin11.App.ViewModels;
+using SophiaWin11.Core.Extensions;
 
 namespace SophiaWin11.App;
 
@@ -22,6 +24,7 @@ public partial class App : Application
             .CreateLogger();
 
         _host = Host.CreateDefaultBuilder()
+            .UseSerilog()
             .ConfigureServices(ConfigureServices)
             .Build();
 
@@ -33,6 +36,8 @@ public partial class App : Application
 
     private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
+        services.AddSophiaCore();
+        services.AddSingleton<MainViewModel>();
         services.AddSingleton<MainWindow>();
     }
 

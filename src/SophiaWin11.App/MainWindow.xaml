@@ -12,11 +12,21 @@
     <Grid>
         <ui:TitleBar Title="Sophia Script for Win11" VerticalAlignment="Top" />
 
-        <TextBlock Text="Sophia Script for Win11 — v0.1.0.0"
-                   FontSize="24"
-                   Foreground="{DynamicResource BrushAccentGold}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="{Binding StatusText}"
+                       FontSize="24"
+                       Foreground="{DynamicResource BrushAccentGold}"
+                       HorizontalAlignment="Center" />
+            <TextBlock Text="{Binding IsElevated}"
+                       FontSize="14"
+                       Foreground="{DynamicResource BrushAccentPeacock}"
+                       HorizontalAlignment="Center"
+                       Margin="0,8,0,0" />
+            <ui:Button Content="Apply Theme"
+                       Command="{Binding ApplyThemeCommand}"
+                       Margin="0,16,0,0"
+                       HorizontalAlignment="Center" />
+        </StackPanel>
     </Grid>
 
 </ui:FluentWindow>
