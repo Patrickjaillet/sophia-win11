@@ -1,3 +1,4 @@
+using System.IO;
 using SophiaWin11.Core.Abstractions;
 using SophiaWin11.Core.Services;
 using Xunit;

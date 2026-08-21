@@ -1,3 +1,4 @@
+using System.IO;
 using System.Reflection;
 using SophiaWin11.Core.Abstractions;
 using SophiaWin11.Core.Catalog;

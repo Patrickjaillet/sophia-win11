@@ -3,7 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using SophiaWin11.App.ViewModels;
+using SophiaWin11.App.Views;
 using SophiaWin11.Core.Extensions;
+using Wpf.Ui;
 
 namespace SophiaWin11.App;
 
@@ -37,8 +39,16 @@ public partial class App : Application
     private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
         services.AddSophiaCore();
-        services.AddSingleton<MainViewModel>();
+
+        services.AddSingleton<ISnackbarService, SnackbarService>();
+        services.AddSingleton<ShellViewModel>();
         services.AddSingleton<MainWindow>();
+
+        services.AddTransient<DashboardViewModel>();
+        services.AddTransient<DashboardPage>();
+        services.AddTransient<SearchViewModel>();
+        services.AddTransient<SearchPage>();
+        services.AddTransient<CategoryPage>();
     }
 
     protected override void OnExit(ExitEventArgs e)

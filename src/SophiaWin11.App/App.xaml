@@ -1,7 +1,10 @@
 <Application x:Class="SophiaWin11.App.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:converters="clr-namespace:SophiaWin11.App.Converters"
+             xmlns:vm="clr-namespace:SophiaWin11.App.ViewModels"
+             xmlns:views="clr-namespace:SophiaWin11.App.Views">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -9,6 +12,14 @@
                 <ui:ControlsDictionary />
                 <ResourceDictionary Source="pack://application:,,,/SophiaWin11.UI;component/Theme/DesignTokens.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+            <converters:RiskLevelToBrushConverter x:Key="RiskLevelToBrushConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+            <DataTemplate DataType="{x:Type vm:TweakRowViewModel}">
+                <views:TweakRowView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

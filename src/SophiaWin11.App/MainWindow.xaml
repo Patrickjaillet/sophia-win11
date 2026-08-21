@@ -5,28 +5,47 @@
                  Title="Sophia Script for Win11"
                  Width="1280"
                  Height="800"
+                 MinWidth="900"
+                 MinHeight="600"
                  WindowBackdropType="Mica"
                  Background="{DynamicResource BrushBackgroundDeep}"
                  ExtendsContentIntoTitleBar="True">
 
     <Grid>
-        <ui:TitleBar Title="Sophia Script for Win11" VerticalAlignment="Top" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="{Binding StatusText}"
-                       FontSize="24"
-                       Foreground="{DynamicResource BrushAccentGold}"
-                       HorizontalAlignment="Center" />
-            <TextBlock Text="{Binding IsElevated}"
-                       FontSize="14"
-                       Foreground="{DynamicResource BrushAccentPeacock}"
-                       HorizontalAlignment="Center"
-                       Margin="0,8,0,0" />
-            <ui:Button Content="Apply Theme"
-                       Command="{Binding ApplyThemeCommand}"
-                       Margin="0,16,0,0"
-                       HorizontalAlignment="Center" />
-        </StackPanel>
+        <ui:TitleBar x:Name="AppTitleBar"
+                     Grid.Row="0"
+                     Title="Sophia Script for Win11" />
+
+        <ui:NavigationView x:Name="RootNavigation"
+                            Grid.Row="1"
+                            MenuItemsSource="{Binding NavigationItems}"
+                            IsPaneOpen="True"
+                            OpenPaneLength="260"
+                            TitleBar="{Binding ElementName=AppTitleBar}">
+            <ui:NavigationView.ContentOverlay>
+                <Grid>
+                    <ui:SnackbarPresenter x:Name="RootSnackbarPresenter" />
+                </Grid>
+            </ui:NavigationView.ContentOverlay>
+        </ui:NavigationView>
+
+        <Border Grid.Row="1"
+                Background="{DynamicResource BrushBackgroundDeep}"
+                Opacity="0.92"
+                Visibility="{Binding IsInitializing, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ui:ProgressRing IsIndeterminate="True" Width="36" Height="36" />
+                <TextBlock Text="{Binding StatusText}"
+                           Margin="0,12,0,0"
+                           Foreground="{DynamicResource BrushAccentGold}"
+                           HorizontalAlignment="Center" />
+            </StackPanel>
+        </Border>
     </Grid>
 
 </ui:FluentWindow>

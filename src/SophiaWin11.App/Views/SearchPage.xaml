@@ -1,0 +1,33 @@
+<UserControl x:Class="SophiaWin11.App.Views.SearchPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:vm="clr-namespace:SophiaWin11.App.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance Type=vm:SearchViewModel}"
+             mc:Ignorable="d">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="Search tweaks"
+                       FontSize="28"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource BrushAccentGold}"
+                       Margin="0,0,0,12" />
+            <ui:TextBox PlaceholderText="Search by name, description or category..."
+                        Text="{Binding Query, UpdateSourceTrigger=PropertyChanged}"
+                        Icon="{ui:SymbolIcon Search24}"
+                        ClearButtonEnabled="True" />
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Results}" />
+        </ScrollViewer>
+    </Grid>
+</UserControl>

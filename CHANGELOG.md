@@ -5,6 +5,27 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/) (4-segment: `MAJOR.MINOR.PATCH.BUILD`).
 
+## [0.6.0.0] - Unreleased
+
+### Added
+
+- WPF-UI-based application shell: `MainWindow` rebuilt around `ui:NavigationView` (Mica backdrop via `ui:FluentWindow.WindowBackdropType="Mica"` — `WindowBackdropType.MicaAlt` does not exist in WPF-UI 4.0.2's enum, verified by reflecting the installed `Wpf.Ui.dll`; the enum only defines `None`/`Auto`/`Mica`/`Acrylic`/`Tabbed`) with a custom `ui:TitleBar` merged into the extended client area
+- Dynamic navigation pane: `ShellViewModel` builds one `NavigationViewItem` per distinct `Category` present in `ITweakService.Tweaks` after `InitializeCatalogAsync()` (plus a Dashboard and a Search entry); categories with zero tweaks never produce a nav node since the list is derived from the loaded catalog, not a hardcoded roadmap category list
+- Category pages: `CategoryViewModel` + `CategoryPage`, one `TweakRowViewModel` per tweak (name, description, risk-level badge, requires-restart flag, Apply/Revert buttons wired to `ITweak.ApplyAsync`/`RevertAsync`, state read via `IsAppliedAsync`); per-row apply/revert failures are caught and surfaced as a Snackbar instead of crashing the page
+- Global search page: `SearchViewModel` + `SearchPage`, live-filtered as you type over `ITweakService.Tweaks` (captured once after catalog init) using a hand-written `TweakSearchScorer` (exact match > substring > ordered-subsequence fuzzy match on Name/Category, substring-only on Description to avoid subsequence noise on longer text) — no fuzzy-search NuGet dependency added, keeps the app offline-first
+- Dashboard page: `DashboardViewModel` + `DashboardPage` showing total tweak count and currently-applied count (computed via `Task.WhenAll` over all 97 `IsAppliedAsync()` calls instead of serially awaiting each one), a "last session" card (no session history is persisted yet, so this honestly shows a static "no session yet" state rather than inventing a persistence layer), and Load/Save profile buttons wired to `IProfileService` via `Microsoft.Win32.OpenFileDialog`/`SaveFileDialog`
+- In-app notifications: `Wpf.Ui.ISnackbarService`/`SnackbarService` registered in DI, presenter wired once in `MainWindow`'s constructor, used to confirm/report apply and revert outcomes from the category and search pages and profile load/save from the dashboard
+- `SophiaWin11.Tests` now also references `SophiaWin11.App` (retargeted to `net9.0-windows10.0.22621.0` with `UseWPF` enabled) so ViewModel logic (search filtering/scoring, dashboard count aggregation, category apply/revert row state) is unit tested without needing a live window; `TweakRowViewModel`/`DashboardViewModel` avoid constructing WPF-UI `SymbolIcon` elements from command logic specifically so this logic stays testable off the UI thread (constructing a `FrameworkElement` off an STA thread throws)
+
+### Changed
+
+- `MainViewModel` replaced by `ShellViewModel` (navigation-shell state: elevation status, initialization status, the dynamic nav item collection) plus dedicated per-page ViewModels; the old placeholder "Apply Theme" button and status text UI is gone
+- `Directory.Build.props` version bumped to `0.6.0.0`
+
+### Notes
+
+- Roadmap acceptance criterion "navigation fluide à 60 FPS mesurée (profiling WPF `PresentationTraceSources`)" cannot be certified from this environment — there is no interactive display to run `PresentationTraceSources` frame-timing profiling against. What was verified statically: the dashboard's 97x `IsAppliedAsync()` aggregation runs via `Task.WhenAll` off the synchronous UI path, category/search page population reads the already-in-memory catalog (no I/O on navigation), and no navigation path does synchronous blocking work on the UI thread. Actual frame-rate measurement needs to be done by running the built app.
+
 ## [0.5.0.0] - Unreleased
 
 ### Added
