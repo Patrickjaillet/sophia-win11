@@ -12,11 +12,19 @@ public sealed class TweakCatalogLoader
     };
 
     private readonly IRegistryService _registryService;
+    private readonly IPowerShellHost? _powerShellHost;
+    private readonly IWin32InteropHost? _win32InteropHost;
     private readonly ITweakSnapshotService? _snapshotService;
 
-    public TweakCatalogLoader(IRegistryService registryService, ITweakSnapshotService? snapshotService = null)
+    public TweakCatalogLoader(
+        IRegistryService registryService,
+        IPowerShellHost? powerShellHost = null,
+        IWin32InteropHost? win32InteropHost = null,
+        ITweakSnapshotService? snapshotService = null)
     {
         _registryService = registryService;
+        _powerShellHost = powerShellHost;
+        _win32InteropHost = win32InteropHost;
         _snapshotService = snapshotService;
     }
 
@@ -42,6 +50,16 @@ public sealed class TweakCatalogLoader
             throw new InvalidOperationException($"Unknown risk level '{definition.RiskLevel}' for tweak '{definition.Name}'.");
         }
 
+        return definition.Type switch
+        {
+            "PowerShellNative" => CreatePowerShellNativeTweak(definition, riskLevel),
+            "Win32Api" => CreateWin32ApiTweak(definition, riskLevel),
+            _ => CreateRegistryTweak(definition, riskLevel),
+        };
+    }
+
+    private ITweak CreateRegistryTweak(TweakDefinition definition, TweakRiskLevel riskLevel)
+    {
         if (!Enum.TryParse<RegistryHive>(definition.Hive, ignoreCase: true, out var hive))
         {
             throw new InvalidOperationException($"Unknown registry hive '{definition.Hive}' for tweak '{definition.Name}'.");
@@ -72,6 +90,44 @@ public sealed class TweakCatalogLoader
             _snapshotService);
     }
 
+    private ITweak CreatePowerShellNativeTweak(TweakDefinition definition, TweakRiskLevel riskLevel)
+    {
+        var powerShellHost = _powerShellHost
+            ?? throw new InvalidOperationException($"Tweak '{definition.Name}' requires an IPowerShellHost, but none was supplied to the catalog loader.");
+
+        return new PowerShellNativeTweak(
+            Guid.Parse(definition.Id),
+            definition.Category,
+            definition.Name,
+            definition.Description,
+            definition.ApplyScript ?? string.Empty,
+            definition.RevertScript ?? string.Empty,
+            definition.ProbeScript ?? string.Empty,
+            definition.RequiresRestart,
+            riskLevel,
+            powerShellHost,
+            snapshotService: _snapshotService);
+    }
+
+    private ITweak CreateWin32ApiTweak(TweakDefinition definition, TweakRiskLevel riskLevel)
+    {
+        var win32InteropHost = _win32InteropHost
+            ?? throw new InvalidOperationException($"Tweak '{definition.Name}' requires an IWin32InteropHost, but none was supplied to the catalog loader.");
+
+        return new Win32ApiTweak(
+            Guid.Parse(definition.Id),
+            definition.Category,
+            definition.Name,
+            definition.Description,
+            definition.Operation ?? string.Empty,
+            definition.ApplyParameters ?? new Dictionary<string, string>(),
+            definition.RevertParameters ?? new Dictionary<string, string>(),
+            definition.RequiresRestart,
+            riskLevel,
+            win32InteropHost,
+            _snapshotService);
+    }
+
     private static object? ConvertValue(object? rawValue, RegistryValueKind kind)
     {
         if (rawValue is null)
@@ -90,6 +146,7 @@ public sealed class TweakCatalogLoader
             RegistryValueKind.QWord => element.GetInt64(),
             RegistryValueKind.String or RegistryValueKind.ExpandString => element.GetString(),
             RegistryValueKind.MultiString => element.EnumerateArray().Select(item => item.GetString() ?? string.Empty).ToArray(),
+            RegistryValueKind.Binary => element.EnumerateArray().Select(item => (byte)item.GetInt32()).ToArray(),
             _ => element.GetRawText(),
         };
     }

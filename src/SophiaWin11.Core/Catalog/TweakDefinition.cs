@@ -34,4 +34,16 @@ public sealed class TweakDefinition
     public object? ApplyValue { get; set; }
 
     public object? RevertValue { get; set; }
+
+    public string? ApplyScript { get; set; }
+
+    public string? RevertScript { get; set; }
+
+    public string? ProbeScript { get; set; }
+
+    public string? Operation { get; set; }
+
+    public IReadOnlyDictionary<string, string>? ApplyParameters { get; set; }
+
+    public IReadOnlyDictionary<string, string>? RevertParameters { get; set; }
 }

@@ -17,11 +17,17 @@ public sealed class TweakCatalogLoaderTests
         return reader.ReadToEnd();
     }
 
+    private static TweakCatalogLoader CreateLoader(IRegistryService? registryService = null) =>
+        new(
+            registryService ?? new RegistryHiveVirtualizer(),
+            new RecordingPowerShellHost(),
+            new RecordingWin32InteropHost());
+
     [Fact]
     public void LoadFromJson_ParsesAllEmbeddedTweaks()
     {
         var json = ReadEmbeddedCatalog();
-        var loader = new TweakCatalogLoader(new RegistryHiveVirtualizer());
+        var loader = CreateLoader();
 
         var tweaks = loader.LoadFromJson(json);
 
@@ -32,7 +38,7 @@ public sealed class TweakCatalogLoaderTests
     public void LoadFromJson_AllTweaksHaveUniqueIds()
     {
         var json = ReadEmbeddedCatalog();
-        var loader = new TweakCatalogLoader(new RegistryHiveVirtualizer());
+        var loader = CreateLoader();
 
         var tweaks = loader.LoadFromJson(json);
 
@@ -44,7 +50,7 @@ public sealed class TweakCatalogLoaderTests
     public void LoadFromJson_AllTweaksHaveNonEmptyCategoryAndName()
     {
         var json = ReadEmbeddedCatalog();
-        var loader = new TweakCatalogLoader(new RegistryHiveVirtualizer());
+        var loader = CreateLoader();
 
         var tweaks = loader.LoadFromJson(json);
 
@@ -60,7 +66,7 @@ public sealed class TweakCatalogLoaderTests
     {
         var json = ReadEmbeddedCatalog();
         var virtualizer = new RegistryHiveVirtualizer();
-        var loader = new TweakCatalogLoader(virtualizer);
+        var loader = CreateLoader(virtualizer);
 
         var tweaks = loader.LoadFromJson(json);
         var first = tweaks[0];
@@ -107,5 +113,108 @@ public sealed class TweakCatalogLoaderTests
         Assert.Single(tweak.RegistryImpact);
         Assert.Equal(RegistryHive.CurrentUser, tweak.RegistryImpact[0].Hive);
         Assert.Equal("Software\\SampleKey", tweak.RegistryImpact[0].SubKey);
+    }
+
+    [Fact]
+    public async Task LoadFromJson_PowerShellNativeTweak_ApplyAsync_InvokesHostWithApplyScript()
+    {
+        const string json = """
+        {
+          "tweaks": [
+            {
+              "id": "22222222-2222-2222-2222-222222222222",
+              "category": "Test",
+              "name": "SampleScriptTweak",
+              "description": "desc",
+              "sophiaFunction": "SampleScriptTweak -Disable",
+              "type": "PowerShellNative",
+              "riskLevel": "Low",
+              "requiresRestart": false,
+              "applyScript": "Write-Output 'apply'",
+              "revertScript": "Write-Output 'revert'",
+              "probeScript": ""
+            }
+          ]
+        }
+        """;
+
+        var powerShellHost = new RecordingPowerShellHost();
+        var loader = new TweakCatalogLoader(new RegistryHiveVirtualizer(), powerShellHost, new RecordingWin32InteropHost());
+        var tweaks = loader.LoadFromJson(json);
+        var tweak = Assert.Single(tweaks);
+
+        await tweak.ApplyAsync();
+
+        Assert.Equal(Guid.Parse("22222222-2222-2222-2222-222222222222"), tweak.Id);
+        Assert.Single(powerShellHost.InvokedScripts);
+        Assert.Equal("Write-Output 'apply'", powerShellHost.InvokedScripts[0]);
+
+        await tweak.RevertAsync();
+
+        Assert.Equal(2, powerShellHost.InvokedScripts.Count);
+        Assert.Equal("Write-Output 'revert'", powerShellHost.InvokedScripts[1]);
+    }
+
+    [Fact]
+    public void LoadFromJson_PowerShellNativeTweak_WithoutHost_Throws()
+    {
+        const string json = """
+        {
+          "tweaks": [
+            {
+              "id": "22222222-2222-2222-2222-222222222222",
+              "category": "Test",
+              "name": "SampleScriptTweak",
+              "description": "desc",
+              "sophiaFunction": "SampleScriptTweak -Disable",
+              "type": "PowerShellNative",
+              "riskLevel": "Low",
+              "requiresRestart": false,
+              "applyScript": "Write-Output 'apply'",
+              "revertScript": "Write-Output 'revert'",
+              "probeScript": ""
+            }
+          ]
+        }
+        """;
+
+        var loader = new TweakCatalogLoader(new RegistryHiveVirtualizer());
+
+        Assert.Throws<InvalidOperationException>(() => loader.LoadFromJson(json));
+    }
+
+    [Fact]
+    public async Task LoadFromJson_Win32ApiTweak_ApplyAsync_InvokesHostWithOperationAndParameters()
+    {
+        const string json = """
+        {
+          "tweaks": [
+            {
+              "id": "33333333-3333-3333-3333-333333333333",
+              "category": "Test",
+              "name": "SampleWin32Tweak",
+              "description": "desc",
+              "sophiaFunction": "SampleWin32Tweak -Disable",
+              "type": "Win32Api",
+              "riskLevel": "Low",
+              "requiresRestart": false,
+              "operation": "BroadcastSettingChange",
+              "applyParameters": { "section": "Cursors" },
+              "revertParameters": { "section": "Cursors" }
+            }
+          ]
+        }
+        """;
+
+        var win32InteropHost = new RecordingWin32InteropHost();
+        var loader = new TweakCatalogLoader(new RegistryHiveVirtualizer(), new RecordingPowerShellHost(), win32InteropHost);
+        var tweaks = loader.LoadFromJson(json);
+        var tweak = Assert.Single(tweaks);
+
+        await tweak.ApplyAsync();
+
+        Assert.Single(win32InteropHost.InvokedOperations);
+        Assert.Equal("BroadcastSettingChange", win32InteropHost.InvokedOperations[0].Operation);
+        Assert.Equal("Cursors", win32InteropHost.InvokedOperations[0].Parameters["section"]);
     }
 }
