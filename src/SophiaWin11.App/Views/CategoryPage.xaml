@@ -16,7 +16,8 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
             <TextBlock Text="{Binding CategoryName}"
-                       FontSize="28"
+                       FontFamily="{DynamicResource FontFamilyDisplay}"
+                       FontSize="{DynamicResource FontSizeDisplayLarge}"
                        FontWeight="SemiBold"
                        Foreground="{DynamicResource BrushAccentGold}" />
             <ui:ProgressRing IsIndeterminate="True"

@@ -9,6 +9,9 @@
                  MinHeight="600"
                  WindowBackdropType="Mica"
                  Background="{DynamicResource BrushBackgroundDeep}"
+                 FontFamily="{DynamicResource FontFamilyBody}"
+                 FontSize="{DynamicResource FontSizeBody}"
+                 Foreground="{DynamicResource BrushTextPrimary}"
                  ExtendsContentIntoTitleBar="True">
 
     <Grid>
@@ -17,15 +20,31 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Border Grid.Row="0"
+                Grid.RowSpan="2"
+                Background="{DynamicResource BrushBackgroundCharcoal}"
+                Opacity="0.22"
+                IsHitTestVisible="False" />
+        <Border Grid.Row="0"
+                Grid.RowSpan="2"
+                Background="{DynamicResource BrushArtDecoMotif}"
+                IsHitTestVisible="False" />
+        <Border Grid.Row="0"
+                Grid.RowSpan="2"
+                Background="{DynamicResource BrushArtDecoNoise}"
+                IsHitTestVisible="False" />
+
         <ui:TitleBar x:Name="AppTitleBar"
                      Grid.Row="0"
-                     Title="Sophia Script for Win11" />
+                     Title="Sophia Script for Win11"
+                     FontFamily="{DynamicResource FontFamilyDisplayAccent}" />
 
         <ui:NavigationView x:Name="RootNavigation"
                             Grid.Row="1"
                             MenuItemsSource="{Binding NavigationItems}"
                             IsPaneOpen="True"
                             OpenPaneLength="260"
+                            FontFamily="{DynamicResource FontFamilyBody}"
                             TitleBar="{Binding ElementName=AppTitleBar}">
             <ui:NavigationView.ContentOverlay>
                 <Grid>
@@ -41,6 +60,8 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <ui:ProgressRing IsIndeterminate="True" Width="36" Height="36" />
                 <TextBlock Text="{Binding StatusText}"
+                           FontFamily="{DynamicResource FontFamilyBody}"
+                           FontSize="{DynamicResource FontSizeBody}"
                            Margin="0,12,0,0"
                            Foreground="{DynamicResource BrushAccentGold}"
                            HorizontalAlignment="Center" />

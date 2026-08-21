@@ -16,7 +16,8 @@
 
         <StackPanel Grid.Row="0" Margin="0,0,0,16">
             <TextBlock Text="Search tweaks"
-                       FontSize="28"
+                       FontFamily="{DynamicResource FontFamilyDisplay}"
+                       FontSize="{DynamicResource FontSizeDisplayLarge}"
                        FontWeight="SemiBold"
                        Foreground="{DynamicResource BrushAccentGold}"
                        Margin="0,0,0,12" />

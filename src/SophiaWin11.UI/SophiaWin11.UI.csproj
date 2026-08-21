@@ -12,4 +12,11 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="Assets\Fonts\PoiretOne-Regular.ttf" />
+    <Resource Include="Assets\Fonts\CinzelDecorative-Regular.ttf" />
+    <Resource Include="Assets\Fonts\CinzelDecorative-Bold.ttf" />
+    <Resource Include="Assets\Fonts\Inter-Regular.ttf" />
+  </ItemGroup>
+
 </Project>

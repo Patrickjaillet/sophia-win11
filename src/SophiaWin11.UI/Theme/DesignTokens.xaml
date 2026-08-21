@@ -1,12 +1,20 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <Color x:Key="ColorBackgroundDeep">#0B0B10</Color>
     <Color x:Key="ColorBackgroundCharcoal">#151521</Color>
     <Color x:Key="ColorAccentGold">#D4AF37</Color>
+    <Color x:Key="ColorAccentGoldDark">#B8860B</Color>
+    <Color x:Key="ColorAccentGoldLight">#F4E5A1</Color>
     <Color x:Key="ColorAccentEmerald">#0F5C4C</Color>
     <Color x:Key="ColorAccentBordeaux">#6E1423</Color>
     <Color x:Key="ColorAccentPeacock">#0F3D5C</Color>
+
+    <Color x:Key="ColorTextPrimary">#F5F1E6</Color>
+    <Color x:Key="ColorTextSecondary">#B7AFA0</Color>
+    <Color x:Key="ColorTextOnAccent">#FFFFFF</Color>
+    <Color x:Key="ColorTextDisabled">#6B675F</Color>
 
     <SolidColorBrush x:Key="BrushBackgroundDeep" Color="{StaticResource ColorBackgroundDeep}" />
     <SolidColorBrush x:Key="BrushBackgroundCharcoal" Color="{StaticResource ColorBackgroundCharcoal}" />
@@ -15,7 +23,80 @@
     <SolidColorBrush x:Key="BrushAccentBordeaux" Color="{StaticResource ColorAccentBordeaux}" />
     <SolidColorBrush x:Key="BrushAccentPeacock" Color="{StaticResource ColorAccentPeacock}" />
 
-    <CornerRadius x:Key="RadiusCard">4</CornerRadius>
+    <SolidColorBrush x:Key="BrushTextPrimary" Color="{StaticResource ColorTextPrimary}" />
+    <SolidColorBrush x:Key="BrushTextSecondary" Color="{StaticResource ColorTextSecondary}" />
+    <SolidColorBrush x:Key="BrushTextOnAccent" Color="{StaticResource ColorTextOnAccent}" />
+    <SolidColorBrush x:Key="BrushTextDisabled" Color="{StaticResource ColorTextDisabled}" />
+
+    <LinearGradientBrush x:Key="BrushAccentGoldGradient" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource ColorAccentGoldDark}" Offset="0" />
+        <GradientStop Color="{StaticResource ColorAccentGoldLight}" Offset="1" />
+    </LinearGradientBrush>
+
+    <CornerRadius x:Key="RadiusCard">2</CornerRadius>
+    <CornerRadius x:Key="RadiusButton">2</CornerRadius>
     <Thickness x:Key="BorderThicknessDecorated">1.5</Thickness>
+    <Thickness x:Key="BorderThicknessThin">1</Thickness>
+    <system:Double x:Key="ChevronCornerSize">10</system:Double>
+
+    <FontFamily x:Key="FontFamilyDisplay">pack://application:,,,/SophiaWin11.UI;component/Assets/Fonts/#Cinzel Decorative</FontFamily>
+    <FontFamily x:Key="FontFamilyDisplayAccent">pack://application:,,,/SophiaWin11.UI;component/Assets/Fonts/#Poiret One</FontFamily>
+    <FontFamily x:Key="FontFamilyBody">pack://application:,,,/SophiaWin11.UI;component/Assets/Fonts/#Inter</FontFamily>
+
+    <system:Double x:Key="FontSizeDisplayLarge">28</system:Double>
+    <system:Double x:Key="FontSizeDisplayMedium">20</system:Double>
+    <system:Double x:Key="FontSizeBody">14</system:Double>
+    <system:Double x:Key="FontSizeCaption">12</system:Double>
+
+    <DrawingBrush x:Key="BrushArtDecoMotif"
+                  TileMode="Tile"
+                  Viewport="0,0,48,48"
+                  ViewportUnits="Absolute"
+                  Stretch="None"
+                  Opacity="0.045">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing>
+                    <GeometryDrawing.Pen>
+                        <Pen Brush="{StaticResource BrushAccentGold}" Thickness="1.25" />
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <PathGeometry Figures="M0,24 L12,8 L24,24" />
+                            <PathGeometry Figures="M24,24 L36,8 L48,24" />
+                            <PathGeometry Figures="M0,40 L12,24 L24,40" />
+                            <PathGeometry Figures="M24,40 L36,24 L48,40" />
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="BrushArtDecoNoise"
+                  TileMode="Tile"
+                  Viewport="0,0,24,24"
+                  ViewportUnits="Absolute"
+                  Stretch="None"
+                  Opacity="0.03">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource BrushTextPrimary}">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <EllipseGeometry Center="3,4" RadiusX="0.6" RadiusY="0.6" />
+                            <EllipseGeometry Center="11,2" RadiusX="0.5" RadiusY="0.5" />
+                            <EllipseGeometry Center="19,7" RadiusX="0.7" RadiusY="0.7" />
+                            <EllipseGeometry Center="6,13" RadiusX="0.5" RadiusY="0.5" />
+                            <EllipseGeometry Center="15,15" RadiusX="0.6" RadiusY="0.6" />
+                            <EllipseGeometry Center="22,18" RadiusX="0.5" RadiusY="0.5" />
+                            <EllipseGeometry Center="2,21" RadiusX="0.6" RadiusY="0.6" />
+                            <EllipseGeometry Center="17,23" RadiusX="0.5" RadiusY="0.5" />
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
 
 </ResourceDictionary>

@@ -5,6 +5,28 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/) (4-segment: `MAJOR.MINOR.PATCH.BUILD`).
 
+## [0.7.0.0] - Unreleased
+
+### Added
+
+- Single non-switchable Art Déco theme: `SophiaWin11.UI/Theme/DesignTokens.xaml` extended with the full palette (deep black `#0B0B10`, charcoal `#151521`, metallic gold `#D4AF37` plus a `#B8860B`→`#F4E5A1` gradient brush, emerald `#0F5C4C`, bordeaux `#6E1423`, peacock `#0F3D5C`), WCAG-checked text tokens (`ColorTextPrimary`/`ColorTextSecondary`/`ColorTextOnAccent`), font-family tokens, and two procedural `DrawingBrush` resources (`BrushArtDecoMotif` — a tiled chevron/fan watermark, `BrushArtDecoNoise` — a tiled dot-grain texture) — no raster assets, both resolution-independent
+- `SophiaWin11.UI/Theme/ArtDecoTheme.xaml`: reassigns every semantic brush key WPF-UI's stock Dark theme controls (`Button`, `CardControl`, `CardExpander`, `ToggleSwitch`, `NavigationView`/`NavigationViewItem`, the accent system) already read via `DynamicResource` (`ButtonBackground`, `CardBackground`, `ToggleSwitchFillOn/Off`, `AccentFillColorDefault/Secondary/Tertiary`, `NavigationViewItem*`, etc. — enumerated by fetching WPF-UI 4.0.2's actual control XAML from source rather than guessing), plus additive `BasedOn` styles per control adding gold `DropShadowEffect`s, decorated border thickness, and the embedded body font; merged into `App.xaml` after `ui:ThemesDictionary`/`ui:ControlsDictionary` so it wins every lookup — the stock Fluent dark palette is structurally present but never visually reaches the user
+- `SophiaWin11.UI/Theme/ArtDecoIcons.xaml` + `SophiaWin11.UI/Controls/ArtDecoIcon.cs` (a `Wpf.Ui.Controls.IconElement` subclass wrapping a `Viewbox`/`Path`): 8 hand-authored 24x24 geometric Art Déco icons (stepped ziggurat ascent for Dashboard, ray-fan magnifier for Search, chevron shield for Privacy & Telemetry, symmetric sunburst fan for UI & Personalization, stepped concentric squares for System, stacked chevrons for Gaming, fan-lined shield for Microsoft Defender & Security, tapered stepped bars for Context menu); `ShellViewModel.BuildNavigationItems` now assigns these instead of `SymbolIcon`, resolved by category string against `Assets/Catalog/tweaks-en.json`'s real category names
+- Embedded fonts (SIL OFL 1.1, real files fetched from `google/fonts` and `rsms/inter` upstream, ~660 KB total): Poiret One Regular, Cinzel Decorative Regular + Bold (display serif, titles), Inter Regular (body) — added as `Resource` build items in `SophiaWin11.UI.csproj` under `Assets/Fonts/`, referenced via `pack://application:,,,/SophiaWin11.UI;component/Assets/Fonts/#<family>`; embedded family names verified with `fontTools` rather than assumed from filenames
+- Tinted Mica background: `MainWindow.xaml` layers a low-opacity charcoal tint, the chevron motif brush, and the noise-grain brush as three stacked `Border` overlays behind `ui:NavigationView`, on top of the existing `WindowBackdropType="Mica"` system backdrop
+- `SophiaWin11.Tests/Theme/ContrastTests.cs`: parses `DesignTokens.xaml` directly via `System.Xml.Linq` (no hand-copied hex constants) and computes real WCAG relative-luminance contrast ratios for every foreground/background pair actually used in the app (gold-on-deep-black, gold-on-charcoal, primary/secondary text on both backgrounds, white risk-badge text on emerald/bordeaux/peacock), asserting 4.5:1 for normal text and 3:1 for the large gold display titles
+
+### Changed
+
+- `MainWindow.xaml` and all 4 `Views/*.xaml` pages: every hardcoded `Foreground="White"`, literal `FontSize`, and literal `FontWeight`-only text style replaced with `DynamicResource` tokens (`BrushTextOnAccent`, `BrushTextSecondary`, `FontSizeDisplayLarge/Medium/Body/Caption`, `FontFamilyDisplay/Body`); the "Restart required" indicator in `TweakRowView` is now a peacock-tinted badge instead of a plain dimmed `TextBlock`, giving the peacock accent color a real, contrast-tested use
+- `Directory.Build.props` version bumped to `0.7.0.0`
+
+### Notes
+
+- Roadmap acceptance criterion "100% des composants utilisent le ResourceDictionary du thème, zéro style par défaut WPF visible" verified by grepping every `.xaml` under `src/SophiaWin11.App` and `src/SophiaWin11.UI` for hardcoded `Color`/`Brush`/hex-literal/`FontFamily` values outside the theme dictionaries themselves — none remain in the view/window XAML
+- "Contraste texte/fond conforme WCAG AA" is covered by the `ContrastTests` pass/fail assertions added this milestone; the full automated accessibility report/tooling (`docs/accessibility-report.md`) remains v1.7.0.0 scope as roadmapped, not built here
+- `Wpf.Ui.Controls.NavigationView`/`NavigationViewItem` were deliberately **not** given full `ControlTemplate` overrides — their real templates (`NavigationLeftFluent.xaml`) use internal `PART_`-style template parts wired up in code-behind for pane scrolling/back-button/breadcrumb behavior; retemplating them from a guessed structure risks silently breaking navigation, so they are reskinned entirely through the semantic brush keys they already expose via `DynamicResource`, which is sufficient to remove every trace of the stock Fluent look
+
 ## [0.6.0.0] - Unreleased
 
 ### Added

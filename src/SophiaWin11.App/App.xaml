@@ -11,6 +11,8 @@
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
                 <ResourceDictionary Source="pack://application:,,,/SophiaWin11.UI;component/Theme/DesignTokens.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/SophiaWin11.UI;component/Theme/ArtDecoIcons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/SophiaWin11.UI;component/Theme/ArtDecoTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />

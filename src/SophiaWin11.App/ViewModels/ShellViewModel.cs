@@ -1,6 +1,9 @@
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using SophiaWin11.Core.Abstractions;
+using SophiaWin11.UI.Controls;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -70,7 +73,7 @@ public sealed partial class ShellViewModel : ObservableObject
         {
             Content = "Dashboard",
             Tag = DashboardTag,
-            Icon = new SymbolIcon(SymbolRegular.Home24),
+            Icon = CreateIcon("IconGeometryDashboard"),
         };
         dashboardItem.Click += (_, _) => ActivateItem(dashboardItem, DashboardTag);
         NavigationItems.Add(dashboardItem);
@@ -79,7 +82,7 @@ public sealed partial class ShellViewModel : ObservableObject
         {
             Content = "Search",
             Tag = SearchTag,
-            Icon = new SymbolIcon(SymbolRegular.Search24),
+            Icon = CreateIcon("IconGeometrySearch"),
         };
         searchItem.Click += (_, _) => ActivateItem(searchItem, SearchTag);
         NavigationItems.Add(searchItem);
@@ -95,11 +98,28 @@ public sealed partial class ShellViewModel : ObservableObject
             {
                 Content = category,
                 Tag = category,
-                Icon = new SymbolIcon(SymbolRegular.Wrench24),
+                Icon = CreateIcon(ResolveCategoryIconKey(category)),
             };
             categoryItem.Click += (_, _) => ActivateItem(categoryItem, category);
             NavigationItems.Add(categoryItem);
         }
+    }
+
+    private static string ResolveCategoryIconKey(string category) => category switch
+    {
+        "Privacy & Telemetry" => "IconGeometryPrivacyTelemetry",
+        "UI & Personalization" => "IconGeometryUiPersonalization",
+        "System" => "IconGeometrySystem",
+        "Gaming" => "IconGeometryGaming",
+        "Microsoft Defender & Security" => "IconGeometryDefenderSecurity",
+        "Context menu" => "IconGeometryContextMenu",
+        _ => "IconGeometrySystem",
+    };
+
+    private static ArtDecoIcon CreateIcon(string geometryResourceKey)
+    {
+        var geometry = Application.Current.TryFindResource(geometryResourceKey) as Geometry;
+        return new ArtDecoIcon { Data = geometry };
     }
 
     private void ActivateItem(NavigationViewItem item, string tag)
