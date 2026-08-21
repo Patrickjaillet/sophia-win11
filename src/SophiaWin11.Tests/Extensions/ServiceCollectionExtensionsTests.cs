@@ -133,6 +133,46 @@ public sealed class ServiceCollectionExtensionsTests
     }
 
     [Fact]
+    public void AddSophiaCore_ResolvesRestorePointService()
+    {
+        using var provider = BuildProvider();
+        var service = provider.GetRequiredService<IRestorePointService>();
+        Assert.NotNull(service);
+    }
+
+    [Fact]
+    public void AddSophiaCore_ResolvesProfileService()
+    {
+        using var provider = BuildProvider();
+        var service = provider.GetRequiredService<IProfileService>();
+        Assert.NotNull(service);
+    }
+
+    [Fact]
+    public void AddSophiaCore_ResolvesConflictDetectionService()
+    {
+        using var provider = BuildProvider();
+        var service = provider.GetRequiredService<IConflictDetectionService>();
+        Assert.NotNull(service);
+    }
+
+    [Fact]
+    public void AddSophiaCore_ResolvesHealthDiagnosticService()
+    {
+        using var provider = BuildProvider();
+        var service = provider.GetRequiredService<IHealthDiagnosticService>();
+        Assert.NotNull(service);
+    }
+
+    [Fact]
+    public void AddSophiaCore_ResolvesSessionService()
+    {
+        using var provider = BuildProvider();
+        var service = provider.GetRequiredService<ISessionService>();
+        Assert.NotNull(service);
+    }
+
+    [Fact]
     public void LocalizationService_SetCulture_UpdatesCurrentCulture()
     {
         using var provider = BuildProvider();

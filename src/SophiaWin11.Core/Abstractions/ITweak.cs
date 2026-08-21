@@ -21,4 +21,6 @@ public interface ITweak
     Task RevertAsync(CancellationToken cancellationToken = default);
 
     Task<bool> IsAppliedAsync(CancellationToken cancellationToken = default);
+
+    Task<string> PreviewAsync(CancellationToken cancellationToken = default);
 }

@@ -21,7 +21,7 @@ public sealed class RegistryTweak : TweakBase
         TweakRiskLevel riskLevel,
         IRegistryService registryService,
         ITweakSnapshotService? snapshotService = null)
-        : base(id, category, name, description, [target], requiresRestart, riskLevel, snapshotService)
+        : base(id, category, name, description, [target with { ApplyValue = applyValue }], requiresRestart, riskLevel, snapshotService)
     {
         _registryService = registryService;
         _target = target;
@@ -54,4 +54,22 @@ public sealed class RegistryTweak : TweakBase
         var current = _registryService.GetValue(_target.Hive, _target.SubKey, _target.ValueName);
         return Task.FromResult(Equals(current, _applyValue));
     }
+
+    protected override Task<string> PreviewCoreAsync(CancellationToken cancellationToken)
+    {
+        var exists = _registryService.KeyExists(_target.Hive, _target.SubKey);
+        var current = exists ? _registryService.GetValue(_target.Hive, _target.SubKey, _target.ValueName) : null;
+        var currentText = current is null ? "(not set)" : FormatValue(current);
+        var targetText = FormatValue(_applyValue);
+
+        var preview = $"{_target.Hive}\\{_target.SubKey}\\{_target.ValueName}: {currentText} -> {targetText}";
+        return Task.FromResult(preview);
+    }
+
+    private static string FormatValue(object value) => value switch
+    {
+        byte[] bytes => Convert.ToHexString(bytes),
+        string[] strings => string.Join(", ", strings),
+        _ => value.ToString() ?? string.Empty,
+    };
 }

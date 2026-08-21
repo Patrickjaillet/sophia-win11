@@ -19,6 +19,11 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ITweakSnapshotService, TweakSnapshotService>();
         services.AddSingleton<IPowerShellHost, PowerShellHost>();
         services.AddSingleton<IWin32InteropHost, Win32InteropHost>();
+        services.AddSingleton<IRestorePointService, RestorePointService>();
+        services.AddSingleton<IProfileService, ProfileService>();
+        services.AddSingleton<IConflictDetectionService, ConflictDetectionService>();
+        services.AddSingleton<IHealthDiagnosticService, HealthDiagnosticService>();
+        services.AddSingleton<ISessionService, SessionService>();
 
         return services;
     }

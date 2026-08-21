@@ -41,4 +41,12 @@ public sealed class PowerShellNativeTweak : TweakBase
         await _powerShellHost.InvokeAsync(_probeScript, cancellationToken).ConfigureAwait(false);
         return false;
     }
+
+    protected override Task<string> PreviewCoreAsync(CancellationToken cancellationToken)
+    {
+        var preview = string.IsNullOrWhiteSpace(_applyScript)
+            ? "No apply script configured."
+            : $"The following PowerShell script would run:{Environment.NewLine}{_applyScript}";
+        return Task.FromResult(preview);
+    }
 }

@@ -4,4 +4,5 @@ public sealed record RegistryImpact(
     RegistryHive Hive,
     string SubKey,
     string ValueName,
-    RegistryValueKind ValueKind);
+    RegistryValueKind ValueKind,
+    object? ApplyValue = null);

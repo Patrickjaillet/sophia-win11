@@ -54,9 +54,13 @@ public abstract class TweakBase : ITweak
 
     public Task<bool> IsAppliedAsync(CancellationToken cancellationToken = default) => IsAppliedCoreAsync(cancellationToken);
 
+    public Task<string> PreviewAsync(CancellationToken cancellationToken = default) => PreviewCoreAsync(cancellationToken);
+
     protected abstract Task ApplyCoreAsync(CancellationToken cancellationToken);
 
     protected abstract Task RevertCoreAsync(CancellationToken cancellationToken);
 
     protected abstract Task<bool> IsAppliedCoreAsync(CancellationToken cancellationToken);
+
+    protected abstract Task<string> PreviewCoreAsync(CancellationToken cancellationToken);
 }

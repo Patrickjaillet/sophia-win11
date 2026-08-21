@@ -37,4 +37,13 @@ public sealed class Win32ApiTweak : TweakBase
 
     protected override Task<bool> IsAppliedCoreAsync(CancellationToken cancellationToken) =>
         Task.FromResult(false);
+
+    protected override Task<string> PreviewCoreAsync(CancellationToken cancellationToken)
+    {
+        var parameters = _applyParameters.Count == 0
+            ? "(no parameters)"
+            : string.Join(", ", _applyParameters.Select(kvp => $"{kvp.Key}={kvp.Value}"));
+        var preview = $"Would invoke Win32 operation '{_operation}' with parameters: {parameters}";
+        return Task.FromResult(preview);
+    }
 }

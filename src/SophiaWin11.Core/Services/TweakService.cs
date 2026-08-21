@@ -32,6 +32,8 @@ public sealed class TweakService : ITweakService
 
     public int TweakCount => _catalog.Count;
 
+    public IReadOnlyList<ITweak> Tweaks => _catalog;
+
     public Task InitializeCatalogAsync(CancellationToken cancellationToken = default)
     {
         var assembly = Assembly.GetExecutingAssembly();

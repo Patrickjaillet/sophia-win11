@@ -5,6 +5,25 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/) (4-segment: `MAJOR.MINOR.PATCH.BUILD`).
 
+## [0.5.0.0] - Unreleased
+
+### Added
+
+- `IRestorePointService` / `RestorePointService`: automatic Windows System Restore point creation before a batch tweak session, via a real `srclient.dll!SRSetRestorePointW` P/Invoke (`[DllImport]`, `[SupportedOSPlatform("windows")]`) using the documented `RESTOREPOINTINFOW`/`STATEMGRSTATUS` struct layout (`BEGIN_SYSTEM_CHANGE`/`END_SYSTEM_CHANGE`/`MODIFY_SETTINGS`, `MAX_DESC_W = 256`); untestable against the live OS, so the service is a thin injectable wrapper and only the calling logic (one restore point per session) is unit tested, against a fake `IRestorePointService`
+- Dry-Run preview: `ITweak.PreviewAsync()` added (implemented via a new `TweakBase.PreviewCoreAsync` abstract hook), producing a "current -> target" textual description per registry value for `RegistryTweak` (reads the live current value through `IRegistryService.GetValue`, never calls `ApplyAsync`), the would-run script text for `PowerShellNativeTweak` (without executing it), and the operation/parameters that would be invoked for `Win32ApiTweak`
+- Profile system: `IProfileService` / `ProfileService`, `TweakProfile` record (Name, CreatedAt, TweakIds) — pure JSON file round-trip to/from a `.sophiaprofile` path, no catalog coupling
+- Conflict detection: `IConflictDetectionService` / `ConflictDetectionService`, `TweakConflict` record — generic, mechanical detection of two selected tweaks that target the exact same `RegistryHive`+`SubKey`+`ValueName` (via a new optional `RegistryImpact.ApplyValue`) and would apply different (or undeterminable) values; covers the DNS-over-HTTPS conflict class described in the roadmap without hand-listing provider pairs
+- System health diagnostic: `IHealthDiagnosticService` / `HealthDiagnosticService`, `HealthDiagnosticResult` record — runs DISM `/CheckHealth` and `sfc /verifyonly` (via a new `IPowerShellHost.InvokeAndCaptureAsync` that returns captured script output) and parses both for known-healthy markers
+- Session apply/rollback: `ISessionService` / `SessionService`, `TweakSession` record, `TweakConflictException` — `ApplySessionAsync` runs conflict detection first (aborts via `TweakConflictException` on any conflict), runs the health diagnostic and aborts if unhealthy when the session includes a `RiskLevel.High` tweak, creates exactly one System Restore point for the whole session, applies each tweak (existing per-tweak Medium/High `ITweakSnapshotService` capture still fires through `TweakBase.ApplyAsync`), and auto-rolls-back already-applied tweaks if one fails mid-session; `RollbackSessionAsync` reverts every applied tweak in reverse order. Integration-tested end-to-end against `RegistryHiveVirtualizer` with 3 `RegistryTweak` fixtures, proving the registry hive is restored bit-for-bit identical to its seeded initial state after apply + rollback
+- `ITweakService.Tweaks` — exposes the loaded catalog as `IReadOnlyList<ITweak>` (previously only `TweakCount` was available)
+- UAC single-elevation verified (no code change needed): `app.manifest` already requires `requireAdministrator` at launch, and no tweak path anywhere in the codebase shells out to a new elevated child process — `PowerShellNativeTweak` stays in-process via `IPowerShellHost`
+
+### Changed
+
+- `RegistryImpact` gained an optional `ApplyValue` (defaults to `null`, backward compatible with existing 4-arg construction) so conflict detection can compare target values without threading a new parameter through every call site
+- `IPowerShellHost` gained `InvokeAndCaptureAsync`, returning `IReadOnlyList<string>` output lines; existing `InvokeAsync` call sites (catalog-driven `PowerShellNativeTweak` apply/revert/probe) are unchanged
+- `RecordingPowerShellHost` test fake extended with canned-output support (`CannedOutput`/`DefaultOutput`) for testing output-parsing logic without real PowerShell/DISM/SFC execution
+
 ## [0.4.0.0] - Unreleased
 
 ### Added
