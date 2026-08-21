@@ -1,0 +1,22 @@
+<ui:FluentWindow x:Class="SophiaWin11.App.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 Title="Sophia Script for Win11"
+                 Width="1280"
+                 Height="800"
+                 WindowBackdropType="Mica"
+                 Background="{DynamicResource BrushBackgroundDeep}"
+                 ExtendsContentIntoTitleBar="True">
+
+    <Grid>
+        <ui:TitleBar Title="Sophia Script for Win11" VerticalAlignment="Top" />
+
+        <TextBlock Text="Sophia Script for Win11 — v0.1.0.0"
+                   FontSize="24"
+                   Foreground="{DynamicResource BrushAccentGold}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+    </Grid>
+
+</ui:FluentWindow>
