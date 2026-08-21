@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:converters="clr-namespace:SophiaWin11.App.Converters"
+             xmlns:uicontrols="clr-namespace:SophiaWin11.UI.Controls;assembly=SophiaWin11.UI"
              Margin="0,0,0,8">
 
     <ui:CardControl>
@@ -46,10 +47,11 @@
         </ui:CardControl.Header>
 
         <Grid>
-            <ui:ProgressRing IsIndeterminate="True"
-                              Width="20"
-                              Height="20"
-                              Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <uicontrols:LottieAnimationPresenter Width="20"
+                                                  Height="20"
+                                                  Source="pack://application:,,,/SophiaWin11.UI;component/Assets/Animations/loading-pulse.json"
+                                                  IsPlaying="{Binding IsBusy}"
+                                                  Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <StackPanel Orientation="Horizontal"
                         Visibility="{Binding IsBusy, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                 <ui:Button Content="Apply"

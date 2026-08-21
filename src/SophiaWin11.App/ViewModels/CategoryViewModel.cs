@@ -14,7 +14,7 @@ public sealed partial class CategoryViewModel : ObservableObject
     {
         CategoryName = category;
         Tweaks = new ObservableCollection<TweakRowViewModel>(
-            tweaks.Select(tweak => new TweakRowViewModel(tweak, snackbarService)));
+            tweaks.Select((tweak, index) => new TweakRowViewModel(tweak, snackbarService) { Index = index }));
     }
 
     public string CategoryName { get; }

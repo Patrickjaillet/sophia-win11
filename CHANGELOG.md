@@ -5,6 +5,30 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/) (4-segment: `MAJOR.MINOR.PATCH.BUILD`).
 
+## [0.8.0.0] - Unreleased
+
+### Added
+
+- `SophiaWin11.UI/Animation/MotionPolicy.cs`: central gate reading `SystemParameters.ClientAreaAnimation` (Windows "Show animations" accessibility setting), live-updated via `SystemParameters.StaticPropertyChanged`; every animation helper below checks it and jumps straight to the end state when animations are disabled
+- `PageTransitions.Enter`: `Storyboard`-equivalent `CubicEase`-driven fade + slide-in on navigation content swap (`MainWindow.xaml.cs`'s `ReplaceContent` path), ~200ms
+- `ToggleBounceBehavior` (attached property on `ArtDecoTheme.xaml`'s `ToggleSwitch` style): gold overshoot-and-settle scale bounce on check/uncheck via `BackEase`, scaling the control's `RenderTransform` rather than guessing WPF-UI's internal knob `PART_` name
+- `CardReveal.Play`: staggered fan-in reveal (opacity + scale-from-center, `CubicEase`) for `TweakRowView` rows, `BeginTime` offset per row index (capped) so a category page's rows cascade in rather than popping at once
+- `LoopingOrnament`: seamless 360° rotation loop (`RepeatBehavior.Forever`) on a chevron/fan Art Déco ornament, shown on `MainWindow` while `ShellViewModel.InitializeAsync()` loads the tweak catalog (the app's splash-equivalent moment)
+- `LottieAnimationPresenter` (`SophiaWin11.UI/Controls/`): Lottie/Bodymovin playback via `SkiaSharp.Skottie` + `SkiaSharp.Views.WPF` (`SKElement` render surface) — verified as real, published, MIT-licensed packages compatible with net9.0-windows before adding (`Wpf.Ui.Lottie` named in the roadmap does not exist as a published package); used as the tweak-apply-in-progress indicator on `TweakRowView`, replacing the default `ProgressBar`
+- `AnimatedGifPresenter` (`SophiaWin11.UI/Controls/`): frame-by-frame GIF playback (`GifBitmapDecoder`, per-frame delay read from `/grctlext/Delay` metadata), decoded frames cached by `Uri` and frozen for cross-thread reuse, playback driven by a shared `CompositionTarget.Rendering`-based `RenderLoop`, `IsPlaying`/`Loop` dependency properties
+- `RenderLoop`, `LoopClock`, `GifFrameTiming`: small testable helpers extracted from the two presenter controls (frame-index/elapsed-time resolution, loop-vs-clamp elapsed advancement) — unit tested directly rather than only through the WPF controls
+- `SophiaWin11.Tests/Animation/`: `MotionPolicyTests`, `CardRevealTests`, `GifFrameTimingTests`, `LoopClockTests`, `RenderLoopTests` — 20 new tests, including the reduced-motion decision logic (`GetEffectiveDuration` returns `TimeSpan.Zero` when animations are disabled)
+
+### Changed
+
+- `TweakRowView`: apply/revert in-flight state now shows `LottieAnimationPresenter` instead of a default `ProgressBar`; rows play `CardReveal` on load
+- `Directory.Build.props` version bumped to `0.8.0.0`
+- `THIRD-PARTY-NOTICES.md`: added `SkiaSharp.Skottie` and `SkiaSharp.Views.WPF` (both MIT)
+
+### Notes
+
+- "Pas de latence perçue > 16ms/frame (60 FPS)" cannot be measured in a non-interactive environment; every animation here animates `RenderTransform`/`Opacity` only (never layout-affecting properties like `Width`/`Margin`), which is the GPU-friendly WPF animation pattern, but real frame-rate profiling on the reference hardware is still outstanding
+
 ## [0.7.0.0] - Unreleased
 
 ### Added

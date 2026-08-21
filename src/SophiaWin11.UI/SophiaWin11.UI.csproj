@@ -10,6 +10,8 @@
   <ItemGroup>
     <PackageReference Include="WPF-UI" Version="4.0.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="SkiaSharp.Views.WPF" Version="4.151.1" />
+    <PackageReference Include="SkiaSharp.Skottie" Version="4.151.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +19,7 @@
     <Resource Include="Assets\Fonts\CinzelDecorative-Regular.ttf" />
     <Resource Include="Assets\Fonts\CinzelDecorative-Bold.ttf" />
     <Resource Include="Assets\Fonts\Inter-Regular.ttf" />
+    <Resource Include="Assets\Animations\loading-pulse.json" />
   </ItemGroup>
 
 </Project>

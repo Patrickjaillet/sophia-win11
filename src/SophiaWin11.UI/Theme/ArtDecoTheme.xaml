@@ -1,7 +1,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="http://schemas.lepo.co/wpfui/2022/xaml"
-                    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+                    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                    xmlns:animation="clr-namespace:SophiaWin11.UI.Animation">
 
     <ResourceDictionary.MergedDictionaries>
         <ui:ThemesDictionary Theme="Dark" />
@@ -127,6 +128,7 @@
            BasedOn="{StaticResource DefaultUiToggleSwitchStyle}"
            TargetType="{x:Type controls:ToggleSwitch}">
         <Setter Property="FontFamily" Value="{DynamicResource FontFamilyBody}" />
+        <Setter Property="animation:ToggleBounceBehavior.IsEnabled" Value="True" />
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect BlurRadius="10"

@@ -25,6 +25,8 @@ public sealed partial class TweakRowViewModel : ObservableObject
 
     public ITweak Tweak { get; }
 
+    public int Index { get; init; }
+
     public Guid Id => Tweak.Id;
 
     public string Name => Tweak.Name;
