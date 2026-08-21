@@ -6,6 +6,7 @@ using Xunit;
 
 namespace SophiaWin11.Tests.Extensions;
 
+[System.Runtime.Versioning.SupportedOSPlatform("windows")]
 public sealed class ServiceCollectionExtensionsTests
 {
     private static ServiceProvider BuildProvider()
@@ -79,6 +80,30 @@ public sealed class ServiceCollectionExtensionsTests
         var first = provider.GetRequiredService<IThemeService>();
         var second = provider.GetRequiredService<IThemeService>();
         Assert.Same(first, second);
+    }
+
+    [Fact]
+    public void AddSophiaCore_ResolvesTweakSnapshotService()
+    {
+        using var provider = BuildProvider();
+        var service = provider.GetRequiredService<ITweakSnapshotService>();
+        Assert.NotNull(service);
+    }
+
+    [Fact]
+    public void AddSophiaCore_ResolvesPowerShellHost()
+    {
+        using var provider = BuildProvider();
+        var service = provider.GetRequiredService<IPowerShellHost>();
+        Assert.NotNull(service);
+    }
+
+    [Fact]
+    public void AddSophiaCore_ResolvesWin32InteropHost()
+    {
+        using var provider = BuildProvider();
+        var service = provider.GetRequiredService<IWin32InteropHost>();
+        Assert.NotNull(service);
     }
 
     [Fact]

@@ -9,7 +9,7 @@
     <Copyright>Copyright © 2026 Patrick JAILLET</Copyright>
     <NeutralLanguage>en</NeutralLanguage>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <Version>0.2.0.0</Version>
+    <Version>0.3.0.0</Version>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
