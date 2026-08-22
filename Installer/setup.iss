@@ -1,5 +1,5 @@
 #define MyAppName "Sophia Script for Win11"
-#define MyAppVersion "0.9.0.0"
+#define MyAppVersion "1.0.0.0"
 #define MyAppPublisher "Patrick JAILLET"
 #define MyAppURL "https://patrickjaillet.github.io/sophia-win11"
 #define MyAppExeName "SophiaWin11.exe"
