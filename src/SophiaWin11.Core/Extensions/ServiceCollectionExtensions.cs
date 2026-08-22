@@ -14,8 +14,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IElevationService, ElevationService>();
         services.AddSingleton<IBackupService, BackupService>();
         services.AddSingleton<ILocalizationService, LocalizationService>();
-        services.AddSingleton<IThemeService, ThemeService>();
-        services.AddSingleton<IAnimationService, AnimationService>();
         services.AddSingleton<ITweakSnapshotService, TweakSnapshotService>();
         services.AddSingleton<IPowerShellHost, PowerShellHost>();
         services.AddSingleton<IWin32InteropHost, Win32InteropHost>();

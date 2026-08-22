@@ -17,6 +17,7 @@ public sealed partial class ShellViewModel : ObservableObject
     private readonly ITweakService _tweakService;
     private readonly IElevationService _elevationService;
     private readonly ISnackbarService _snackbarService;
+    private readonly ISessionService _sessionService;
 
     private NavigationViewItem? _activeItem;
 
@@ -29,11 +30,12 @@ public sealed partial class ShellViewModel : ObservableObject
     [ObservableProperty]
     private string statusText = "Loading tweak catalog...";
 
-    public ShellViewModel(ITweakService tweakService, IElevationService elevationService, ISnackbarService snackbarService)
+    public ShellViewModel(ITweakService tweakService, IElevationService elevationService, ISnackbarService snackbarService, ISessionService sessionService)
     {
         _tweakService = tweakService;
         _elevationService = elevationService;
         _snackbarService = snackbarService;
+        _sessionService = sessionService;
 
         IsElevated = _elevationService.IsRunningElevated;
         NavigationItems = new ObservableCollection<object>();
@@ -62,7 +64,7 @@ public sealed partial class ShellViewModel : ObservableObject
     public CategoryViewModel CreateCategoryViewModel(string category)
     {
         var tweaks = _tweakService.Tweaks.Where(tweak => tweak.Category == category).ToList();
-        return new CategoryViewModel(category, tweaks, _snackbarService);
+        return new CategoryViewModel(category, tweaks, _snackbarService, _sessionService);
     }
 
     private void BuildNavigationItems()

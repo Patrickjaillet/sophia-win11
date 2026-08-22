@@ -14,6 +14,7 @@ public sealed partial class DashboardViewModel : ObservableObject
     private readonly ITweakService _tweakService;
     private readonly IProfileService _profileService;
     private readonly ISnackbarService _snackbarService;
+    private readonly ISessionService _sessionService;
 
     [ObservableProperty]
     private bool isLoading;
@@ -27,11 +28,12 @@ public sealed partial class DashboardViewModel : ObservableObject
     [ObservableProperty]
     private string lastSessionSummary = "No session yet.";
 
-    public DashboardViewModel(ITweakService tweakService, IProfileService profileService, ISnackbarService snackbarService)
+    public DashboardViewModel(ITweakService tweakService, IProfileService profileService, ISnackbarService snackbarService, ISessionService sessionService)
     {
         _tweakService = tweakService;
         _profileService = profileService;
         _snackbarService = snackbarService;
+        _sessionService = sessionService;
 
         TotalTweaksCount = _tweakService.TweakCount;
 
@@ -124,15 +126,20 @@ public sealed partial class DashboardViewModel : ObservableObject
             var profile = await _profileService.LoadProfileAsync(dialog.FileName).ConfigureAwait(true);
             var catalogById = _tweakService.Tweaks.ToDictionary(tweak => tweak.Id);
 
+            var matchedTweaks = profile.TweakIds
+                .Select(tweakId => catalogById.GetValueOrDefault(tweakId))
+                .Where(tweak => tweak is not null)
+                .Select(tweak => tweak!)
+                .ToList();
+
             var appliedCount = 0;
 
-            foreach (var tweakId in profile.TweakIds)
+            if (matchedTweaks.Count > 0)
             {
-                if (catalogById.TryGetValue(tweakId, out var tweak))
-                {
-                    await tweak.ApplyAsync().ConfigureAwait(true);
-                    appliedCount++;
-                }
+                var session = await _sessionService
+                    .ApplySessionAsync(matchedTweaks, $"Profile load: {profile.Name}")
+                    .ConfigureAwait(true);
+                appliedCount = session.AppliedTweaks.Count;
             }
 
             await RefreshAsync().ConfigureAwait(true);
@@ -142,6 +149,14 @@ public sealed partial class DashboardViewModel : ObservableObject
                 $"Applied {appliedCount} of {profile.TweakIds.Count} tweak(s) from '{profile.Name}'.",
                 ControlAppearance.Success,
                 TimeSpan.FromSeconds(3));
+        }
+        catch (TweakConflictException ex)
+        {
+            _snackbarService.Show(
+                "Profile has conflicting tweaks",
+                ex.Message,
+                ControlAppearance.Caution,
+                TimeSpan.FromSeconds(6));
         }
         catch (Exception ex)
         {

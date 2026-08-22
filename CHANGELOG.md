@@ -5,6 +5,19 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/) (4-segment: `MAJOR.MINOR.PATCH.BUILD`).
 
+## [Unreleased]
+
+### Fixed
+
+- `SessionService.ApplySessionAsync` now only creates a Windows System Restore point when the session's tweak selection contains at least one `Medium`- or `High`-risk tweak, mirroring `TweakBase.ApplyAsync`'s per-tweak snapshot gating — previously it created a restore point unconditionally for every session, including single `Low`-risk registry toggles, making every Apply click pay the restore-point cost (several seconds, plus Windows' 24h `SystemRestorePointCreationFrequency` throttle)
+- `TweakRowViewModel.ApplyAsync`/`RevertAsync` now route through `ISessionService.ApplySessionAsync`/`RollbackSessionAsync` instead of calling `Tweak.ApplyAsync()`/`RevertAsync()` directly, so the v0.5.0.0 safety-net engine (conflict detection, restore points, health diagnostics) actually runs for real UI apply/revert clicks rather than only through the automatic per-tweak snapshot; a `TweakConflictException` now surfaces as a distinct "Conflict detected" snackbar instead of the generic failure message
+- `DashboardViewModel.LoadProfileAsync` now resolves a loaded profile's tweak IDs and applies them as a single `ISessionService.ApplySessionAsync` session instead of looping `tweak.ApplyAsync()` per tweak, so a profile's tweaks get one conflict check/restore point instead of none; a `TweakConflictException` shows a distinct "conflicting tweaks" snackbar
+- Added a Preview (Dry-Run) button to `TweakRowView`, calling `Tweak.PreviewAsync()` and surfacing the result via a longer-duration `ISnackbarService` toast — the v0.5.0.0 `ITweak.PreviewAsync` path was previously unreachable from the UI
+
+### Removed
+
+- `IThemeService`/`ThemeService` and `IAnimationService`/`AnimationService` (`SophiaWin11.Core`): dead code orphaned since `MainViewModel` was deleted in v0.6.0.0's UI rewrite — the real Art Déco theme is applied statically via `App.xaml` `ResourceDictionary` merging (v0.7.0.0) and the real reduced-motion gate is `SophiaWin11.UI/Animation/MotionPolicy.cs` (v0.8.0.0); `ThemeService.ApplyTheme()` did nothing beyond flipping a bool, and `AnimationService.AnimationsEnabled` was a hardcoded-`true` field nothing real ever read
+
 ## [0.9.0.0] - Unreleased
 
 ### Added

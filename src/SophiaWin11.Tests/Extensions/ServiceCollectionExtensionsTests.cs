@@ -58,27 +58,11 @@ public sealed class ServiceCollectionExtensionsTests
     }
 
     [Fact]
-    public void AddSophiaCore_ResolvesThemeService()
-    {
-        using var provider = BuildProvider();
-        var service = provider.GetRequiredService<IThemeService>();
-        Assert.NotNull(service);
-    }
-
-    [Fact]
-    public void AddSophiaCore_ResolvesAnimationService()
-    {
-        using var provider = BuildProvider();
-        var service = provider.GetRequiredService<IAnimationService>();
-        Assert.NotNull(service);
-    }
-
-    [Fact]
     public void AddSophiaCore_AllServicesAreSingletons()
     {
         using var provider = BuildProvider();
-        var first = provider.GetRequiredService<IThemeService>();
-        var second = provider.GetRequiredService<IThemeService>();
+        var first = provider.GetRequiredService<ITweakSnapshotService>();
+        var second = provider.GetRequiredService<ITweakSnapshotService>();
         Assert.Same(first, second);
     }
 
@@ -113,23 +97,6 @@ public sealed class ServiceCollectionExtensionsTests
         var service = provider.GetRequiredService<IElevationService>();
         var exception = Record.Exception(() => service.IsRunningElevated);
         Assert.Null(exception);
-    }
-
-    [Fact]
-    public void ThemeService_ApplyTheme_SetsIsThemeApplied()
-    {
-        using var provider = BuildProvider();
-        var service = provider.GetRequiredService<IThemeService>();
-        service.ApplyTheme();
-        Assert.True(service.IsThemeApplied);
-    }
-
-    [Fact]
-    public void AnimationService_AnimationsEnabled_DefaultsToTrue()
-    {
-        using var provider = BuildProvider();
-        var service = provider.GetRequiredService<IAnimationService>();
-        Assert.True(service.AnimationsEnabled);
     }
 
     [Fact]

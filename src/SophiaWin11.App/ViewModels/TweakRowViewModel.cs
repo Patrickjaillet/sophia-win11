@@ -11,6 +11,8 @@ namespace SophiaWin11.App.ViewModels;
 public sealed partial class TweakRowViewModel : ObservableObject
 {
     private readonly ISnackbarService _snackbarService;
+    private readonly ISessionService _sessionService;
+    private TweakSession? _appliedSession;
 
     [ObservableProperty]
     private bool isApplied;
@@ -31,10 +33,11 @@ public sealed partial class TweakRowViewModel : ObservableObject
 
     private CancellationTokenSource? resultResetCts;
 
-    public TweakRowViewModel(ITweak tweak, ISnackbarService snackbarService)
+    public TweakRowViewModel(ITweak tweak, ISnackbarService snackbarService, ISessionService sessionService)
     {
         Tweak = tweak;
         _snackbarService = snackbarService;
+        _sessionService = sessionService;
     }
 
     public ITweak Tweak { get; }
@@ -74,13 +77,61 @@ public sealed partial class TweakRowViewModel : ObservableObject
     [RelayCommand]
     private async Task ApplyAsync()
     {
-        await ExecuteAsync(Tweak.ApplyAsync, "applied").ConfigureAwait(true);
+        await ExecuteAsync(ApplyThroughSessionAsync, "applied").ConfigureAwait(true);
     }
 
     [RelayCommand]
     private async Task RevertAsync()
     {
-        await ExecuteAsync(Tweak.RevertAsync, "reverted").ConfigureAwait(true);
+        await ExecuteAsync(RevertThroughSessionAsync, "reverted").ConfigureAwait(true);
+    }
+
+    [RelayCommand]
+    private async Task PreviewAsync()
+    {
+        if (IsBusy)
+        {
+            return;
+        }
+
+        try
+        {
+            var preview = await Tweak.PreviewAsync().ConfigureAwait(true);
+
+            _snackbarService.Show(
+                $"Preview: {Name}",
+                string.IsNullOrWhiteSpace(preview) ? "No changes would be made." : preview,
+                ControlAppearance.Info,
+                TimeSpan.FromSeconds(8));
+        }
+        catch (Exception ex)
+        {
+            _snackbarService.Show(
+                "Preview failed",
+                $"Could not preview '{Name}': {ex.Message}",
+                ControlAppearance.Danger,
+                TimeSpan.FromSeconds(5));
+        }
+    }
+
+    private async Task ApplyThroughSessionAsync(CancellationToken cancellationToken)
+    {
+        _appliedSession = await _sessionService
+            .ApplySessionAsync(new[] { Tweak }, $"Apply '{Name}'", cancellationToken)
+            .ConfigureAwait(true);
+    }
+
+    private async Task RevertThroughSessionAsync(CancellationToken cancellationToken)
+    {
+        if (_appliedSession is not null)
+        {
+            await _sessionService.RollbackSessionAsync(_appliedSession, cancellationToken).ConfigureAwait(true);
+            _appliedSession = null;
+        }
+        else
+        {
+            await Tweak.RevertAsync(cancellationToken).ConfigureAwait(true);
+        }
     }
 
     private async Task ExecuteAsync(Func<CancellationToken, Task> action, string pastTenseVerb)
@@ -109,6 +160,17 @@ public sealed partial class TweakRowViewModel : ObservableObject
 
             IsBusy = false;
             ShowSuccessIndicator = true;
+        }
+        catch (TweakConflictException ex)
+        {
+            _snackbarService.Show(
+                "Conflict detected",
+                $"'{Name}' conflicts with another tweak: {ex.Message}",
+                ControlAppearance.Caution,
+                TimeSpan.FromSeconds(6));
+
+            IsBusy = false;
+            ShowFailureIndicator = true;
         }
         catch (Exception ex)
         {

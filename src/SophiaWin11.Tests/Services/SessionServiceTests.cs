@@ -81,11 +81,30 @@ public sealed class SessionServiceTests
     }
 
     [Fact]
-    public async Task ApplySessionAsync_CreatesExactlyOneRestorePoint_ForTheWholeSession()
+    public async Task ApplySessionAsync_CreatesExactlyOneRestorePoint_ForTheWholeSession_WhenSessionContainsMediumRisk()
     {
         var virtualizer = new RegistryHiveVirtualizer();
         var target1 = new RegistryImpact(RegistryHive.CurrentUser, "Software\\SophiaWin11Tests\\X", "Value", RegistryValueKind.DWord);
         var target2 = new RegistryImpact(RegistryHive.CurrentUser, "Software\\SophiaWin11Tests\\Y", "Value", RegistryValueKind.DWord);
+
+        var tweak1 = new RegistryTweak(Guid.NewGuid(), "Test", "Tweak1", "desc", target1, 1, 0, false, TweakRiskLevel.Low, virtualizer);
+        var tweak2 = new RegistryTweak(Guid.NewGuid(), "Test", "Tweak2", "desc", target2, 1, 0, false, TweakRiskLevel.Medium, virtualizer);
+
+        var restorePointService = new FakeRestorePointService();
+        var healthDiagnosticService = new FakeHealthDiagnosticService();
+        var service = CreateService(restorePointService, healthDiagnosticService);
+
+        await service.ApplySessionAsync([tweak1, tweak2], "Test session");
+
+        Assert.Equal(1, restorePointService.CallCount);
+    }
+
+    [Fact]
+    public async Task ApplySessionAsync_LowRiskOnly_DoesNotCreateRestorePoint()
+    {
+        var virtualizer = new RegistryHiveVirtualizer();
+        var target1 = new RegistryImpact(RegistryHive.CurrentUser, "Software\\SophiaWin11Tests\\LowOnlyA", "Value", RegistryValueKind.DWord);
+        var target2 = new RegistryImpact(RegistryHive.CurrentUser, "Software\\SophiaWin11Tests\\LowOnlyB", "Value", RegistryValueKind.DWord);
 
         var tweak1 = new RegistryTweak(Guid.NewGuid(), "Test", "Tweak1", "desc", target1, 1, 0, false, TweakRiskLevel.Low, virtualizer);
         var tweak2 = new RegistryTweak(Guid.NewGuid(), "Test", "Tweak2", "desc", target2, 1, 0, false, TweakRiskLevel.Low, virtualizer);
@@ -95,6 +114,22 @@ public sealed class SessionServiceTests
         var service = CreateService(restorePointService, healthDiagnosticService);
 
         await service.ApplySessionAsync([tweak1, tweak2], "Test session");
+
+        Assert.Equal(0, restorePointService.CallCount);
+    }
+
+    [Fact]
+    public async Task ApplySessionAsync_WithHighRiskTweak_CreatesRestorePoint()
+    {
+        var virtualizer = new RegistryHiveVirtualizer();
+        var target = new RegistryImpact(RegistryHive.LocalMachine, "Software\\SophiaWin11Tests\\HighRiskRestorePoint", "Value", RegistryValueKind.DWord);
+        var tweak = new RegistryTweak(Guid.NewGuid(), "Test", "HighRiskTweak", "desc", target, 1, 0, false, TweakRiskLevel.High, virtualizer);
+
+        var restorePointService = new FakeRestorePointService();
+        var healthDiagnosticService = new FakeHealthDiagnosticService();
+        var service = CreateService(restorePointService, healthDiagnosticService);
+
+        await service.ApplySessionAsync([tweak], "Test session");
 
         Assert.Equal(1, restorePointService.CallCount);
     }

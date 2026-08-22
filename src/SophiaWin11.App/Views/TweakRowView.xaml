@@ -69,8 +69,11 @@
                                                   Visibility="{Binding ShowFailureIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <StackPanel Orientation="Horizontal"
                         Visibility="{Binding ShowActionButtons, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ui:Button Content="Preview"
+                           Command="{Binding PreviewCommand}" />
                 <ui:Button Content="Apply"
                            Appearance="Primary"
+                           Margin="8,0,0,0"
                            Command="{Binding ApplyCommand}"
                            Visibility="{Binding IsApplied, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                 <ui:Button Content="Revert"

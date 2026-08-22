@@ -48,13 +48,17 @@ public sealed class SessionService : ISessionService
             }
         }
 
-        var restorePointCreated = await _restorePointService
-            .CreateRestorePointAsync(description, cancellationToken)
-            .ConfigureAwait(false);
-
-        if (!restorePointCreated)
+        var restorePointCreated = false;
+        if (selection.Any(tweak => tweak.RiskLevel is TweakRiskLevel.Medium or TweakRiskLevel.High))
         {
-            _logger.LogWarning("System Restore point could not be created; proceeding with the session anyway.");
+            restorePointCreated = await _restorePointService
+                .CreateRestorePointAsync(description, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (!restorePointCreated)
+            {
+                _logger.LogWarning("System Restore point could not be created; proceeding with the session anyway.");
+            }
         }
 
         var applied = new List<ITweak>(selection.Count);

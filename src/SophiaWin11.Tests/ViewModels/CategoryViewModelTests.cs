@@ -15,7 +15,7 @@ public sealed class CategoryViewModelTests
             new FakeTweak("Gaming", "A", "descA", initiallyApplied: true),
             new FakeTweak("Gaming", "B", "descB", initiallyApplied: false),
         };
-        var viewModel = new CategoryViewModel("Gaming", tweaks, new FakeSnackbarService());
+        var viewModel = new CategoryViewModel("Gaming", tweaks, new FakeSnackbarService(), new FakeSessionService());
 
         await viewModel.LoadAsync();
 
@@ -28,7 +28,7 @@ public sealed class CategoryViewModelTests
     public async Task ApplyCommand_CallsApplyAndUpdatesRowState()
     {
         var tweak = new FakeTweak("Gaming", "A", "descA", initiallyApplied: false);
-        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService());
+        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), new FakeSessionService());
         await viewModel.LoadAsync();
 
         await viewModel.Tweaks[0].ApplyCommand.ExecuteAsync(null);
@@ -41,7 +41,7 @@ public sealed class CategoryViewModelTests
     public async Task RevertCommand_CallsRevertAndUpdatesRowState()
     {
         var tweak = new FakeTweak("Gaming", "A", "descA", initiallyApplied: true);
-        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService());
+        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), new FakeSessionService());
         await viewModel.LoadAsync();
 
         await viewModel.Tweaks[0].RevertCommand.ExecuteAsync(null);
@@ -55,12 +55,75 @@ public sealed class CategoryViewModelTests
     {
         var tweak = new FakeTweak("Gaming", "A", "descA") { ThrowOnApply = true };
         var snackbar = new FakeSnackbarService();
-        var viewModel = new CategoryViewModel("Gaming", [tweak], snackbar);
+        var viewModel = new CategoryViewModel("Gaming", [tweak], snackbar, new FakeSessionService());
         await viewModel.LoadAsync();
 
         await viewModel.Tweaks[0].ApplyCommand.ExecuteAsync(null);
 
         Assert.False(viewModel.Tweaks[0].IsApplied);
+        Assert.Single(snackbar.Shown);
+    }
+
+    [Fact]
+    public async Task ApplyCommand_RoutesThroughSessionService()
+    {
+        var tweak = new FakeTweak("Gaming", "A", "descA", initiallyApplied: false);
+        var sessionService = new FakeSessionService();
+        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), sessionService);
+        await viewModel.LoadAsync();
+
+        await viewModel.Tweaks[0].ApplyCommand.ExecuteAsync(null);
+
+        Assert.Single(sessionService.ApplyCalls);
+        Assert.Same(tweak, sessionService.ApplyCalls[0][0]);
+        Assert.True(viewModel.Tweaks[0].IsApplied);
+    }
+
+    [Fact]
+    public async Task RevertCommand_AfterApply_RollsBackTheAppliedSession()
+    {
+        var tweak = new FakeTweak("Gaming", "A", "descA", initiallyApplied: false);
+        var sessionService = new FakeSessionService();
+        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), sessionService);
+        await viewModel.LoadAsync();
+
+        await viewModel.Tweaks[0].ApplyCommand.ExecuteAsync(null);
+        await viewModel.Tweaks[0].RevertCommand.ExecuteAsync(null);
+
+        Assert.Single(sessionService.RollbackCalls);
+        Assert.False(viewModel.Tweaks[0].IsApplied);
+    }
+
+    [Fact]
+    public async Task ApplyCommand_WhenSessionServiceThrowsConflict_ShowsCautionSnackbarAndDoesNotCrash()
+    {
+        var tweak = new FakeTweak("Gaming", "A", "descA", initiallyApplied: false);
+        var other = new FakeTweak("Gaming", "B", "descB");
+        var sessionService = new FakeSessionService
+        {
+            ConflictsToThrow = [new TweakConflict(tweak, other, "mutually exclusive")],
+        };
+        var snackbar = new FakeSnackbarService();
+        var viewModel = new CategoryViewModel("Gaming", [tweak], snackbar, sessionService);
+        await viewModel.LoadAsync();
+
+        await viewModel.Tweaks[0].ApplyCommand.ExecuteAsync(null);
+
+        Assert.False(viewModel.Tweaks[0].IsApplied);
+        Assert.Single(snackbar.Shown);
+        Assert.Contains("Conflict", snackbar.Shown[0].Title);
+    }
+
+    [Fact]
+    public async Task PreviewCommand_ShowsSnackbarWithPreviewText()
+    {
+        var tweak = new FakeTweak("Gaming", "A", "descA");
+        var snackbar = new FakeSnackbarService();
+        var viewModel = new CategoryViewModel("Gaming", [tweak], snackbar, new FakeSessionService());
+        await viewModel.LoadAsync();
+
+        await viewModel.Tweaks[0].PreviewCommand.ExecuteAsync(null);
+
         Assert.Single(snackbar.Shown);
     }
 }
