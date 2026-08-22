@@ -165,4 +165,52 @@
   <data name="Settings_LanguageDescription" xml:space="preserve">
     <value>Choisissez la langue utilisée dans toute l&apos;application. Le changement s&apos;applique immédiatement.</value>
   </data>
+  <data name="Nav_About" xml:space="preserve">
+    <value>À propos</value>
+  </data>
+  <data name="About_Header" xml:space="preserve">
+    <value>À propos</value>
+  </data>
+  <data name="About_SophiaScriptSectionHeader" xml:space="preserve">
+    <value>Sophia Script for Windows</value>
+  </data>
+  <data name="About_SophiaScriptDescription" xml:space="preserve">
+    <value>Le catalogue de tweaks et le moteur PowerShell originaux que ce projet réimplémente en application native Windows 11.</value>
+  </data>
+  <data name="About_UiSectionHeader" xml:space="preserve">
+    <value>UI Windows 11</value>
+  </data>
+  <data name="About_UiDescription" xml:space="preserve">
+    <value>L&apos;interface native Windows 11, le moteur de tweaks et le thème Art Déco construits au-dessus du catalogue Sophia Script.</value>
+  </data>
+  <data name="About_CopyrightLabel" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="About_WebsiteLabel" xml:space="preserve">
+    <value>Site web</value>
+  </data>
+  <data name="About_EmailLabel" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="About_LicenseSectionHeader" xml:space="preserve">
+    <value>Licence</value>
+  </data>
+  <data name="About_LicenseDescription" xml:space="preserve">
+    <value>Ce logiciel est distribué sous licence MIT. Exportez le texte complet de la licence ainsi que chaque mention de licence tierce ci-dessous.</value>
+  </data>
+  <data name="About_ExportButton" xml:space="preserve">
+    <value>Exporter la licence et les mentions tierces</value>
+  </data>
+  <data name="About_ExportFileTypeName" xml:space="preserve">
+    <value>Document texte</value>
+  </data>
+  <data name="About_SnackbarExportedTitle" xml:space="preserve">
+    <value>Documents exportés</value>
+  </data>
+  <data name="About_SnackbarExportedMessage" xml:space="preserve">
+    <value>Licence et mentions tierces enregistrées dans '{0}'.</value>
+  </data>
+  <data name="About_SnackbarExportFailedTitle" xml:space="preserve">
+    <value>Échec de l&apos;export des documents</value>
+  </data>
 </root>

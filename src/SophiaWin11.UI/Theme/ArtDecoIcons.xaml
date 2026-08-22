@@ -25,4 +25,7 @@
     <PathGeometry x:Key="IconGeometryContextMenu"
                   Figures="M3,6 L21,6 M6,12 L18,12 M9,18 L15,18" />
 
+    <PathGeometry x:Key="IconGeometryAbout"
+                  Figures="M12,12 m-9,0 a9,9 0 1,0 18,0 a9,9 0 1,0 -18,0 M12,11 L12,17 M12,7.5 L12,8 M7,3 L9,7 M17,3 L15,7 M1,12 L3,12 M21,12 L23,12" />
+
 </ResourceDictionary>

@@ -165,4 +165,52 @@
   <data name="Settings_LanguageDescription" xml:space="preserve">
     <value>Выберите язык интерфейса приложения. Изменение применяется немедленно.</value>
   </data>
+  <data name="Nav_About" xml:space="preserve">
+    <value>О программе</value>
+  </data>
+  <data name="About_Header" xml:space="preserve">
+    <value>О программе</value>
+  </data>
+  <data name="About_SophiaScriptSectionHeader" xml:space="preserve">
+    <value>Sophia Script for Windows</value>
+  </data>
+  <data name="About_SophiaScriptDescription" xml:space="preserve">
+    <value>Оригинальный каталог твиков и движок PowerShell, которые этот проект переиспользует в виде нативного приложения для Windows 11.</value>
+  </data>
+  <data name="About_UiSectionHeader" xml:space="preserve">
+    <value>UI Windows 11</value>
+  </data>
+  <data name="About_UiDescription" xml:space="preserve">
+    <value>Нативный интерфейс Windows 11, движок твиков и дизайн-система Ар-деко, построенные поверх каталога Sophia Script.</value>
+  </data>
+  <data name="About_CopyrightLabel" xml:space="preserve">
+    <value>Авторские права</value>
+  </data>
+  <data name="About_WebsiteLabel" xml:space="preserve">
+    <value>Веб-сайт</value>
+  </data>
+  <data name="About_EmailLabel" xml:space="preserve">
+    <value>Эл. почта</value>
+  </data>
+  <data name="About_LicenseSectionHeader" xml:space="preserve">
+    <value>Лицензия</value>
+  </data>
+  <data name="About_LicenseDescription" xml:space="preserve">
+    <value>Это программное обеспечение распространяется по лицензии MIT. Экспортируйте полный текст лицензии и все уведомления о сторонних компонентах ниже.</value>
+  </data>
+  <data name="About_ExportButton" xml:space="preserve">
+    <value>Экспорт лицензии и сторонних уведомлений</value>
+  </data>
+  <data name="About_ExportFileTypeName" xml:space="preserve">
+    <value>Текстовый документ</value>
+  </data>
+  <data name="About_SnackbarExportedTitle" xml:space="preserve">
+    <value>Документы экспортированы</value>
+  </data>
+  <data name="About_SnackbarExportedMessage" xml:space="preserve">
+    <value>Лицензия и сторонние уведомления сохранены в '{0}'.</value>
+  </data>
+  <data name="About_SnackbarExportFailedTitle" xml:space="preserve">
+    <value>Не удалось экспортировать документы</value>
+  </data>
 </root>

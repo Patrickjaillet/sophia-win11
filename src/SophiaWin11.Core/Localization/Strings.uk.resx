@@ -165,4 +165,52 @@
   <data name="Settings_LanguageDescription" xml:space="preserve">
     <value>Виберіть мову інтерфейсу застосунку. Зміна набуде чинності негайно.</value>
   </data>
+  <data name="Nav_About" xml:space="preserve">
+    <value>Про застосунок</value>
+  </data>
+  <data name="About_Header" xml:space="preserve">
+    <value>Про застосунок</value>
+  </data>
+  <data name="About_SophiaScriptSectionHeader" xml:space="preserve">
+    <value>Sophia Script for Windows</value>
+  </data>
+  <data name="About_SophiaScriptDescription" xml:space="preserve">
+    <value>Оригінальний каталог твіків і рушій PowerShell, які цей проєкт переосмислює як нативний застосунок для Windows 11.</value>
+  </data>
+  <data name="About_UiSectionHeader" xml:space="preserve">
+    <value>UI Windows 11</value>
+  </data>
+  <data name="About_UiDescription" xml:space="preserve">
+    <value>Нативний інтерфейс Windows 11, рушій твіків і дизайн-система Ар-деко, побудовані на основі каталогу Sophia Script.</value>
+  </data>
+  <data name="About_CopyrightLabel" xml:space="preserve">
+    <value>Авторське право</value>
+  </data>
+  <data name="About_WebsiteLabel" xml:space="preserve">
+    <value>Вебсайт</value>
+  </data>
+  <data name="About_EmailLabel" xml:space="preserve">
+    <value>Ел. пошта</value>
+  </data>
+  <data name="About_LicenseSectionHeader" xml:space="preserve">
+    <value>Ліцензія</value>
+  </data>
+  <data name="About_LicenseDescription" xml:space="preserve">
+    <value>Це програмне забезпечення розповсюджується за ліцензією MIT. Експортуйте повний текст ліцензії та всі повідомлення про сторонні компоненти нижче.</value>
+  </data>
+  <data name="About_ExportButton" xml:space="preserve">
+    <value>Експортувати ліцензію та сторонні повідомлення</value>
+  </data>
+  <data name="About_ExportFileTypeName" xml:space="preserve">
+    <value>Текстовий документ</value>
+  </data>
+  <data name="About_SnackbarExportedTitle" xml:space="preserve">
+    <value>Документи експортовано</value>
+  </data>
+  <data name="About_SnackbarExportedMessage" xml:space="preserve">
+    <value>Ліцензію та сторонні повідомлення збережено в '{0}'.</value>
+  </data>
+  <data name="About_SnackbarExportFailedTitle" xml:space="preserve">
+    <value>Не вдалося експортувати документи</value>
+  </data>
 </root>

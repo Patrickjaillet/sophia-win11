@@ -59,6 +59,14 @@ public partial class MainWindow : FluentWindow
             return;
         }
 
+        if (tag == ShellViewModel.AboutTag)
+        {
+            var page = _serviceProvider.GetRequiredService<AboutPage>();
+            RootNavigation.ReplaceContent(page);
+            PageTransitions.Enter(page);
+            return;
+        }
+
         var categoryViewModel = _viewModel.CreateCategoryViewModel(tag);
         var categoryPage = _serviceProvider.GetRequiredService<CategoryPage>();
         RootNavigation.ReplaceContent(categoryPage, categoryViewModel);

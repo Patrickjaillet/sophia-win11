@@ -18,6 +18,8 @@
     <EmbeddedResource Include="../../Assets/Catalog/tweaks-de.json" LogicalName="SophiaWin11.Core.Catalog.tweaks.de.json" WithCulture="false" />
     <EmbeddedResource Include="../../Assets/Catalog/tweaks-ru.json" LogicalName="SophiaWin11.Core.Catalog.tweaks.ru.json" WithCulture="false" />
     <EmbeddedResource Include="../../Assets/Catalog/tweaks-uk.json" LogicalName="SophiaWin11.Core.Catalog.tweaks.uk.json" WithCulture="false" />
+    <EmbeddedResource Include="../../LICENSE" LogicalName="SophiaWin11.Core.Legal.LICENSE.txt" WithCulture="false" />
+    <EmbeddedResource Include="../../THIRD-PARTY-NOTICES.md" LogicalName="SophiaWin11.Core.Legal.THIRD-PARTY-NOTICES.md" WithCulture="false" />
   </ItemGroup>
 
 </Project>

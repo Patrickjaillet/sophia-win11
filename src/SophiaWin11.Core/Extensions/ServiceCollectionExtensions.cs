@@ -21,6 +21,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IConflictDetectionService, ConflictDetectionService>();
         services.AddSingleton<IHealthDiagnosticService, HealthDiagnosticService>();
         services.AddSingleton<ISessionService, SessionService>();
+        services.AddSingleton<ILegalDocumentService, LegalDocumentService>();
 
         return services;
     }

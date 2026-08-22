@@ -5,6 +5,10 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/) (4-segment: `MAJOR.MINOR.PATCH.BUILD`).
 
+## [1.2.0.0] - 2026-08-22
+
+Added an About page, reachable from the navigation menu, showing the app name and current version, an animated Art Déco banner, the Sophia Script and UI Windows 11 copyright notices with clickable links to the original project and the app's website, and a mention of the MIT license. A new button lets you export the full license text and the list of third-party libraries used by the app to a text file of your choice, so you no longer need to open the installation folder to read them. The list of third-party libraries and their licenses was also audited and completed to cover every library actually shipped in the app.
+
 ## [1.1.0.0] - 2026-08-22
 
 The app is now available in French, German, Russian, and Ukrainian, alongside English. On first launch it automatically picks up your Windows display language if it's one of these five; otherwise it starts in English. You can change the language at any time from the new Settings page, and the switch applies immediately across the whole app — no restart needed. This includes every button, label, and message in the interface, as well as all 97 tweak names, descriptions, and categories. The project's documentation (README) is now also available in all five languages, with a language switcher at the top of each page.

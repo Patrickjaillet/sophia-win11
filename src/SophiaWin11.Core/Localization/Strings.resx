@@ -165,4 +165,52 @@
   <data name="Settings_LanguageDescription" xml:space="preserve">
     <value>Choose the language used across the app. The change applies immediately.</value>
   </data>
+  <data name="Nav_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="About_Header" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="About_SophiaScriptSectionHeader" xml:space="preserve">
+    <value>Sophia Script for Windows</value>
+  </data>
+  <data name="About_SophiaScriptDescription" xml:space="preserve">
+    <value>The original tweak catalog and PowerShell engine this project reimplements as a native Windows 11 application.</value>
+  </data>
+  <data name="About_UiSectionHeader" xml:space="preserve">
+    <value>UI Windows 11</value>
+  </data>
+  <data name="About_UiDescription" xml:space="preserve">
+    <value>The native Windows 11 interface, tweak engine and Art Déco design system built on top of the Sophia Script catalog.</value>
+  </data>
+  <data name="About_CopyrightLabel" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="About_WebsiteLabel" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="About_EmailLabel" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="About_LicenseSectionHeader" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="About_LicenseDescription" xml:space="preserve">
+    <value>This software is distributed under the MIT license. Export the full license text and every third-party notice below.</value>
+  </data>
+  <data name="About_ExportButton" xml:space="preserve">
+    <value>Export license &amp; third-party notices</value>
+  </data>
+  <data name="About_ExportFileTypeName" xml:space="preserve">
+    <value>Text document</value>
+  </data>
+  <data name="About_SnackbarExportedTitle" xml:space="preserve">
+    <value>Documents exported</value>
+  </data>
+  <data name="About_SnackbarExportedMessage" xml:space="preserve">
+    <value>License and third-party notices saved to '{0}'.</value>
+  </data>
+  <data name="About_SnackbarExportFailedTitle" xml:space="preserve">
+    <value>Could not export documents</value>
+  </data>
 </root>

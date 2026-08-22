@@ -1,0 +1,134 @@
+<UserControl x:Class="SophiaWin11.App.Views.AboutPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:uicontrols="clr-namespace:SophiaWin11.UI.Controls;assembly=SophiaWin11.UI"
+             xmlns:vm="clr-namespace:SophiaWin11.App.ViewModels"
+             xmlns:loc="clr-namespace:SophiaWin11.App.Localization"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance Type=vm:AboutViewModel}"
+             mc:Ignorable="d">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24">
+        <StackPanel MaxWidth="960" HorizontalAlignment="Stretch">
+            <TextBlock Text="{loc:Translate Key=About_Header}"
+                       FontFamily="{DynamicResource FontFamilyDisplay}"
+                       FontSize="{DynamicResource FontSizeDisplayLarge}"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource BrushAccentGold}"
+                       Margin="0,0,0,16" />
+
+            <uicontrols:LottieAnimationPresenter Height="140"
+                                                  HorizontalAlignment="Stretch"
+                                                  Margin="0,0,0,16"
+                                                  Source="pack://application:,,,/SophiaWin11.UI;component/Assets/Animations/about-banner.json"
+                                                  IsPlaying="True" />
+
+            <ui:CardControl Margin="0,0,0,16">
+                <ui:CardControl.Icon>
+                    <ui:SymbolIcon Symbol="Info24" />
+                </ui:CardControl.Icon>
+                <ui:CardControl.Header>
+                    <StackPanel>
+                        <TextBlock Text="{Binding AppName}"
+                                   FontFamily="{DynamicResource FontFamilyDisplayAccent}"
+                                   FontSize="{DynamicResource FontSizeDisplayMedium}"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource BrushAccentGold}" />
+                        <TextBlock Text="{Binding VersionDisplay}"
+                                   FontFamily="{DynamicResource FontFamilyBody}"
+                                   Foreground="{DynamicResource BrushTextSecondary}"
+                                   FontSize="{DynamicResource FontSizeCaption}" />
+                    </StackPanel>
+                </ui:CardControl.Header>
+            </ui:CardControl>
+
+            <ui:CardExpander Icon="{ui:SymbolIcon Globe24}" Margin="0,0,0,16" IsExpanded="True">
+                <ui:CardExpander.Header>
+                    <TextBlock Text="{loc:Translate Key=About_SophiaScriptSectionHeader}"
+                               FontFamily="{DynamicResource FontFamilyBody}"
+                               FontWeight="SemiBold" />
+                </ui:CardExpander.Header>
+                <StackPanel Margin="0,8,0,8">
+                    <TextBlock Text="{loc:Translate Key=About_SophiaScriptDescription}"
+                               FontFamily="{DynamicResource FontFamilyBody}"
+                               Foreground="{DynamicResource BrushTextSecondary}"
+                               FontSize="{DynamicResource FontSizeCaption}"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,8" />
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                        <TextBlock Text="{loc:Translate Key=About_CopyrightLabel}"
+                                   FontFamily="{DynamicResource FontFamilyBody}"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,8,0" />
+                        <TextBlock Text="{Binding SophiaScriptCopyright}"
+                                   FontFamily="{DynamicResource FontFamilyBody}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{loc:Translate Key=About_WebsiteLabel}"
+                                   FontFamily="{DynamicResource FontFamilyBody}"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,8,0" />
+                        <ui:HyperlinkButton Content="{Binding SophiaScriptUrl}" NavigateUri="{Binding SophiaScriptUrl}" Padding="0" />
+                    </StackPanel>
+                </StackPanel>
+            </ui:CardExpander>
+
+            <ui:CardExpander Icon="{ui:SymbolIcon Person24}" Margin="0,0,0,16" IsExpanded="True">
+                <ui:CardExpander.Header>
+                    <TextBlock Text="{loc:Translate Key=About_UiSectionHeader}"
+                               FontFamily="{DynamicResource FontFamilyBody}"
+                               FontWeight="SemiBold" />
+                </ui:CardExpander.Header>
+                <StackPanel Margin="0,8,0,8">
+                    <TextBlock Text="{loc:Translate Key=About_UiDescription}"
+                               FontFamily="{DynamicResource FontFamilyBody}"
+                               Foreground="{DynamicResource BrushTextSecondary}"
+                               FontSize="{DynamicResource FontSizeCaption}"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,8" />
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                        <TextBlock Text="{loc:Translate Key=About_CopyrightLabel}"
+                                   FontFamily="{DynamicResource FontFamilyBody}"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,8,0" />
+                        <TextBlock Text="{Binding UiWindowsCopyright}"
+                                   FontFamily="{DynamicResource FontFamilyBody}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                        <TextBlock Text="{loc:Translate Key=About_EmailLabel}"
+                                   FontFamily="{DynamicResource FontFamilyBody}"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,8,0" />
+                        <ui:HyperlinkButton Content="{Binding UiWindowsEmail}" NavigateUri="{Binding UiWindowsEmail, StringFormat='mailto:{0}'}" Padding="0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{loc:Translate Key=About_WebsiteLabel}"
+                                   FontFamily="{DynamicResource FontFamilyBody}"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,8,0" />
+                        <ui:HyperlinkButton Content="{Binding UiWindowsUrl}" NavigateUri="{Binding UiWindowsUrl}" Padding="0" />
+                    </StackPanel>
+                </StackPanel>
+            </ui:CardExpander>
+
+            <ui:CardControl Icon="{ui:SymbolIcon DocumentText24}">
+                <ui:CardControl.Header>
+                    <StackPanel>
+                        <TextBlock Text="{loc:Translate Key=About_LicenseSectionHeader}"
+                                   FontFamily="{DynamicResource FontFamilyBody}"
+                                   FontWeight="SemiBold" />
+                        <TextBlock Text="{loc:Translate Key=About_LicenseDescription}"
+                                   FontFamily="{DynamicResource FontFamilyBody}"
+                                   Foreground="{DynamicResource BrushTextSecondary}"
+                                   FontSize="{DynamicResource FontSizeCaption}"
+                                   TextWrapping="Wrap"
+                                   MaxWidth="560" />
+                    </StackPanel>
+                </ui:CardControl.Header>
+                <ui:Button Content="{loc:Translate Key=About_ExportButton}" Command="{Binding ExportLegalDocumentsCommand}" />
+            </ui:CardControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

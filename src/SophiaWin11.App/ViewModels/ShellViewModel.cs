@@ -15,6 +15,7 @@ public sealed partial class ShellViewModel : ObservableObject
     public const string DashboardTag = "dashboard";
     public const string SearchTag = "search";
     public const string SettingsTag = "settings";
+    public const string AboutTag = "about";
 
     private readonly ITweakService _tweakService;
     private readonly IElevationService _elevationService;
@@ -158,6 +159,15 @@ public sealed partial class ShellViewModel : ObservableObject
         };
         settingsItem.Click += (_, _) => ActivateItem(settingsItem, SettingsTag);
         NavigationItems.Add(settingsItem);
+
+        var aboutItem = new NavigationViewItem
+        {
+            Content = _localizationService.GetString("Nav_About"),
+            Tag = AboutTag,
+            Icon = CreateIcon("IconGeometryAbout"),
+        };
+        aboutItem.Click += (_, _) => ActivateItem(aboutItem, AboutTag);
+        NavigationItems.Add(aboutItem);
 
         var categoriesInCatalogOrder = _tweakService.Tweaks
             .Select(tweak => tweak.Category)

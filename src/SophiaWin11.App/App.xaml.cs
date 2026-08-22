@@ -57,6 +57,8 @@ public partial class App : Application
         services.AddTransient<CategoryPage>();
         services.AddTransient<SettingsViewModel>();
         services.AddTransient<SettingsPage>();
+        services.AddTransient<AboutViewModel>();
+        services.AddTransient<AboutPage>();
     }
 
     protected override void OnExit(ExitEventArgs e)
