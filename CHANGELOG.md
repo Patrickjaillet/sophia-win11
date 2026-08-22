@@ -5,6 +5,26 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/) (4-segment: `MAJOR.MINOR.PATCH.BUILD`).
 
+## [0.9.0.0] - Unreleased
+
+### Added
+
+- 6 real Lottie/Bodymovin animated assets under `SophiaWin11.UI/Assets/Animations/` (44 KB total, well under the 5 MB budget): `splash-loop.json` (app-load ornament), `status-success.json`, `status-failure.json`, `status-progress.json` (fast-operation in-progress), `loading-mascot.json` (long-running `PowerShellNativeTweak` operations), `about-banner.json` (produced now, no host page until v1.2.0.0)
+- `tools/animations/generate_lottie_assets.py`: standalone Python 3 stdlib-only script that emits valid Bodymovin JSON directly (no After Effects/GUI exporter available) using only Skottie-confirmed-supported features (shapes, trim paths, transforms — no raster/text/expressions); colors sourced from `DesignTokens.xaml` hex values kept as named constants in the script
+- `SophiaWin11.Tests/Animation/LottieAssetTests.cs`: parses every asset through the real `SkiaSharp.Skottie.Animation.Create` parser (not a hand-rolled schema check), asserts sane `Duration`/`Fps`/`InPoint`/`OutPoint`, plus a total-size-under-5MB assertion — 7 new tests
+- `COMPILATION.md`: new "Animation asset pipeline" section documenting the generation method, export/embedding path, validation approach, and a full animation style guide table (duration, loop, easing, `DesignTokens.xaml` token references per asset)
+- `MainWindow.xaml`'s splash/loading state now plays the real `splash-loop.json` through `LottieAnimationPresenter`, replacing v0.8.0.0's placeholder procedural `LoopingOrnament` rotation; the redundant stock `ui:ProgressRing` shown alongside it was removed as visually redundant with the new animation
+- `TweakRowView`/`TweakRowViewModel`: apply/revert now shows `status-progress.json` for fast (`RegistryTweak`) operations vs `loading-mascot.json` for long-running (`PowerShellNativeTweak`) ones, then `status-success.json`/`status-failure.json` on completion (auto-reset after 2.5s) — no default `ProgressBar`/`ProgressRing` anywhere in this flow
+
+### Changed
+
+- `Directory.Build.props` version bumped to `0.9.0.0`
+
+### Notes
+
+- The roadmap's "icônes de statut animées par catégorie" was interpreted as 3 generic states (success/failure/in-progress) reused across every category, not 3×8=24 category-specific animated variants — the 8 static category icons from v0.7.0.0 (`ArtDecoIcons.xaml`) are unrelated and out of scope here; documented in `COMPILATION.md`
+- Fixed during review: the delegated work left `MainWindow.xaml.cs` with a missing `using SophiaWin11.UI.Animation;` (broke the build, `PageTransitions.Enter` calls unresolved) — restored
+
 ## [0.8.0.0] - Unreleased
 
 ### Added

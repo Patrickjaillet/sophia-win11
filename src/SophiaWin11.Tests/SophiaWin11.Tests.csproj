@@ -14,6 +14,7 @@
     <PackageReference Include="coverlet.collector" Version="6.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
+    <PackageReference Include="SkiaSharp.Skottie" Version="4.151.1" />
   </ItemGroup>
 
   <ItemGroup>

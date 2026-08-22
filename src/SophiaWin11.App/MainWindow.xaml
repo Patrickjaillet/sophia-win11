@@ -59,15 +59,10 @@
                 Opacity="0.92"
                 Visibility="{Binding IsInitializing, Converter={StaticResource BooleanToVisibilityConverter}}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <uicontrols:ArtDecoIcon x:Name="SplashOrnament"
-                                        Data="{DynamicResource IconGeometryUiPersonalization}"
-                                        Foreground="{DynamicResource BrushAccentGold}"
-                                        Width="40"
-                                        Height="40" />
-                <ui:ProgressRing IsIndeterminate="True"
-                                  Width="36"
-                                  Height="36"
-                                  Margin="0,12,0,0" />
+                <uicontrols:LottieAnimationPresenter Width="96"
+                                                      Height="96"
+                                                      Source="pack://application:,,,/SophiaWin11.UI;component/Assets/Animations/splash-loop.json"
+                                                      IsPlaying="{Binding IsInitializing}" />
                 <TextBlock Text="{Binding StatusText}"
                            FontFamily="{DynamicResource FontFamilyBody}"
                            FontSize="{DynamicResource FontSizeBody}"

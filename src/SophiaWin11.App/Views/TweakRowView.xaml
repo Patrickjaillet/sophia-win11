@@ -49,11 +49,26 @@
         <Grid>
             <uicontrols:LottieAnimationPresenter Width="20"
                                                   Height="20"
-                                                  Source="pack://application:,,,/SophiaWin11.UI;component/Assets/Animations/loading-pulse.json"
-                                                  IsPlaying="{Binding IsBusy}"
-                                                  Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                  Source="pack://application:,,,/SophiaWin11.UI;component/Assets/Animations/status-progress.json"
+                                                  IsPlaying="{Binding ShowFastProgressIndicator}"
+                                                  Visibility="{Binding ShowFastProgressIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <uicontrols:LottieAnimationPresenter Width="20"
+                                                  Height="20"
+                                                  Source="pack://application:,,,/SophiaWin11.UI;component/Assets/Animations/loading-mascot.json"
+                                                  IsPlaying="{Binding ShowLongRunningProgressIndicator}"
+                                                  Visibility="{Binding ShowLongRunningProgressIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <uicontrols:LottieAnimationPresenter Width="20"
+                                                  Height="20"
+                                                  Source="pack://application:,,,/SophiaWin11.UI;component/Assets/Animations/status-success.json"
+                                                  IsPlaying="{Binding ShowSuccessIndicator}"
+                                                  Visibility="{Binding ShowSuccessIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <uicontrols:LottieAnimationPresenter Width="20"
+                                                  Height="20"
+                                                  Source="pack://application:,,,/SophiaWin11.UI;component/Assets/Animations/status-failure.json"
+                                                  IsPlaying="{Binding ShowFailureIndicator}"
+                                                  Visibility="{Binding ShowFailureIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <StackPanel Orientation="Horizontal"
-                        Visibility="{Binding IsBusy, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                        Visibility="{Binding ShowActionButtons, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <ui:Button Content="Apply"
                            Appearance="Primary"
                            Command="{Binding ApplyCommand}"

@@ -30,6 +30,75 @@ Requires [Inno Setup 7](https://jrsoftware.org/isinfo.php).
 ISCC.exe Installer/setup.iss
 ```
 
+## Animation asset pipeline (v0.9.0.0)
+
+There is no After Effects (or any GUI Lottie exporter) in this environment. Bodymovin/Lottie is a
+plain, documented JSON schema (shape layers, keyframes, cubic-bezier easing), so every animated
+asset is generated directly as valid Bodymovin JSON by a small standalone script rather than
+exported from a GUI tool:
+
+```
+python tools/animations/generate_lottie_assets.py
+```
+
+`tools/animations/generate_lottie_assets.py` is pure Python 3 standard library (`json`, `math`,
+`os` only, no third-party dependencies) and is not part of the build — it is a one-time/on-demand
+authoring tool, never invoked at application runtime. It reads no external files; every color it
+emits is copied by hand from `SophiaWin11.UI/Theme/DesignTokens.xaml` (the hex values are kept
+side by side with their token names as constants at the top of the script) and converted to the
+0–1 RGB floats the Bodymovin `c` (color) property expects. Re-running the script regenerates every
+asset deterministically from those constants; to change an asset's palette, duration, shape count,
+or easing, edit the corresponding `build_*()` function and re-run.
+
+Each generated shape uses only Bodymovin features `SkiaSharp.Skottie` is confirmed to support:
+shape groups (`gr`), paths (`sh`), ellipses (`el`), fills (`fl`), strokes (`st`), trim paths
+(`tm`, used for the "drawing itself" reveal on the status icons), and animated transforms
+(`tr`/layer `ks` — position, scale, rotation, opacity). No raster images, no repeaters, no text
+layers, no expressions — keeping the files small and avoiding any lesser-supported renderer
+feature.
+
+### Export target and embedding
+
+Every asset is written to `SophiaWin11.UI/Assets/Animations/*.json` and added as a `Resource`
+build item in `SophiaWin11.UI.csproj` (same pattern the v0.8.0.0 placeholder used), so it is
+compiled into the `SophiaWin11.UI.dll` satellite resources and referenced at runtime purely via a
+`pack://application:,,,/SophiaWin11.UI;component/Assets/Animations/<file>.json` URI through
+`LottieAnimationPresenter`. There is zero runtime generation and zero network access — every asset
+is a static embedded resource already present in the compiled binary.
+
+### Validation
+
+`SophiaWin11.Tests/Animation/LottieAssetTests.cs` parses every asset in
+`SophiaWin11.UI/Assets/Animations/` directly through `SkiaSharp.Skottie.Animation.Create` (the
+same API `LottieAnimationPresenter` uses) and asserts it parses without throwing and reports a
+sane, non-zero `Duration`/`Fps`/`InPoint`/`OutPoint` — the same real parser the app renders with,
+not a hand-rolled JSON-schema check. A second test sums the on-disk size of every file in that
+directory and asserts the total stays under 5 MB.
+
+### Animation style guide
+
+| Asset | File | Size (px) | Duration | Loop | Easing | Palette (`DesignTokens.xaml` tokens) |
+|---|---|---|---|---|---|---|
+| Splash screen loop | `splash-loop.json` | 200×200 | 4.0 s | Perfect loop (continuous rotation, 0°→360°) | Linear rotation; cubic in/out (`0.4/1 → 0.6/0`) on the ring/diamond pulses | `ColorAccentGold`, `ColorAccentGoldDark`, `ColorAccentGoldLight` |
+| Status — success | `status-success.json` | 64×64 | 1.5 s | Draw-in, hold, crossfade back to start | Cubic in/out on trim-path reveal and opacity crossfade | `ColorAccentEmerald` (ring), `ColorAccentGoldLight` (check) |
+| Status — failure | `status-failure.json` | 64×64 | 1.5 s | Draw-in, hold, crossfade back to start (matches success pacing) | Cubic in/out on trim-path reveal and opacity crossfade | `ColorAccentBordeaux` (ring), `ColorAccentGoldLight` (cross) |
+| Status — in progress | `status-progress.json` | 64×64 | 1.0 s | Perfect loop (continuous rotation) | Linear rotation | `ColorAccentGold`, `ColorAccentGoldDark` |
+| Loading mascot (long operations) | `loading-mascot.json` | 120×120 | 3.0 s | Perfect loop (three counter-rotating rings + pulsing center) | Linear rotation on rings; cubic in/out on center pulse | `ColorAccentGold`, `ColorAccentGoldDark`, `ColorAccentPeacock`, `ColorAccentEmerald`, `ColorAccentGoldLight` |
+| About banner | `about-banner.json` | 480×140 | 4.0 s | Perfect loop (breathing end-fans + traveling shimmer) | Cubic in/out on fan breathing; linear shimmer sweep | `ColorAccentGold`, `ColorAccentGoldDark`, `ColorAccentGoldLight` |
+
+The status icons intentionally read as **3 generic states (success / failure / in-progress)**
+rather than one animated variant per tweak category: the roadmap's "par catégorie" wording was
+interpreted as "wherever a per-tweak result needs to be shown" (i.e. reused across every category),
+not as 3 × 8 = 24 category-specific animated icons — the 8 static category icons already exist from
+v0.7.0.0 (`ArtDecoIcons.xaml`) and are out of scope here. `loading-mascot.json` is a deliberately
+more elaborate, slower loop than `status-progress.json`, used specifically when the busy tweak is a
+`PowerShellNativeTweak` (`TweakRowViewModel.IsLongRunningOperation`) — DISM/UWP-export-class
+operations that genuinely take several seconds — so the indicator itself signals "this will take a
+while" rather than reusing the same fast small spinner shown for a near-instant registry write.
+`about-banner.json` has no host page yet (the "About" page is v1.2.0.0 scope); it is produced,
+validated, and embedded now, ready to be dropped into a `LottieAnimationPresenter` once that page
+exists.
+
 ## Tweak engine (v0.4.0.0)
 
 The tweak catalog is declarative JSON (`Assets/Catalog/tweaks-en.json`), embedded as

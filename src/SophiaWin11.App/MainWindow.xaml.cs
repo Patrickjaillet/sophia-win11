@@ -29,9 +29,7 @@ public partial class MainWindow : FluentWindow
 
     private async void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
     {
-        LoopingOrnament.Start(SplashOrnament);
         await _viewModel.InitializeAsync();
-        LoopingOrnament.Stop(SplashOrnament);
     }
 
     private void OnNavigationRequested(string tag)

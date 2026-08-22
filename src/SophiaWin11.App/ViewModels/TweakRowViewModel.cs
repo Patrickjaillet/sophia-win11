@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SophiaWin11.Core.Abstractions;
+using SophiaWin11.Core.Tweaks;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Extensions;
@@ -15,7 +16,20 @@ public sealed partial class TweakRowViewModel : ObservableObject
     private bool isApplied;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowFastProgressIndicator))]
+    [NotifyPropertyChangedFor(nameof(ShowLongRunningProgressIndicator))]
     private bool isBusy;
+
+    [ObservableProperty]
+    private bool showSuccessIndicator;
+
+    [ObservableProperty]
+    private bool showFailureIndicator;
+
+    [ObservableProperty]
+    private bool showActionButtons = true;
+
+    private CancellationTokenSource? resultResetCts;
 
     public TweakRowViewModel(ITweak tweak, ISnackbarService snackbarService)
     {
@@ -38,6 +52,12 @@ public sealed partial class TweakRowViewModel : ObservableObject
     public TweakRiskLevel RiskLevel => Tweak.RiskLevel;
 
     public bool RequiresRestart => Tweak.RequiresRestart;
+
+    public bool IsLongRunningOperation => Tweak is PowerShellNativeTweak;
+
+    public bool ShowFastProgressIndicator => IsBusy && !IsLongRunningOperation;
+
+    public bool ShowLongRunningProgressIndicator => IsBusy && IsLongRunningOperation;
 
     public async Task RefreshStateAsync(CancellationToken cancellationToken = default)
     {
@@ -70,7 +90,11 @@ public sealed partial class TweakRowViewModel : ObservableObject
             return;
         }
 
+        resultResetCts?.Cancel();
         IsBusy = true;
+        ShowSuccessIndicator = false;
+        ShowFailureIndicator = false;
+        ShowActionButtons = false;
 
         try
         {
@@ -82,6 +106,9 @@ public sealed partial class TweakRowViewModel : ObservableObject
                 $"'{Name}' was {pastTenseVerb}.",
                 ControlAppearance.Success,
                 TimeSpan.FromSeconds(3));
+
+            IsBusy = false;
+            ShowSuccessIndicator = true;
         }
         catch (Exception ex)
         {
@@ -90,10 +117,38 @@ public sealed partial class TweakRowViewModel : ObservableObject
                 $"Could not apply '{Name}': {ex.Message}",
                 ControlAppearance.Danger,
                 TimeSpan.FromSeconds(5));
-        }
-        finally
-        {
+
             IsBusy = false;
+            ShowFailureIndicator = true;
         }
+
+        ScheduleResultReset();
+    }
+
+    private void ScheduleResultReset()
+    {
+        resultResetCts = new CancellationTokenSource();
+        _ = ResetResultIndicatorsAsync(resultResetCts.Token);
+    }
+
+    private async Task ResetResultIndicatorsAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            await Task.Delay(TimeSpan.FromSeconds(2.5), cancellationToken).ConfigureAwait(true);
+        }
+        catch (TaskCanceledException)
+        {
+            return;
+        }
+
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return;
+        }
+
+        ShowSuccessIndicator = false;
+        ShowFailureIndicator = false;
+        ShowActionButtons = true;
     }
 }

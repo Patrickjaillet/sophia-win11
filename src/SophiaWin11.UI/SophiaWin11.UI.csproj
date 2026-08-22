@@ -19,7 +19,12 @@
     <Resource Include="Assets\Fonts\CinzelDecorative-Regular.ttf" />
     <Resource Include="Assets\Fonts\CinzelDecorative-Bold.ttf" />
     <Resource Include="Assets\Fonts\Inter-Regular.ttf" />
-    <Resource Include="Assets\Animations\loading-pulse.json" />
+    <Resource Include="Assets\Animations\splash-loop.json" />
+    <Resource Include="Assets\Animations\status-success.json" />
+    <Resource Include="Assets\Animations\status-failure.json" />
+    <Resource Include="Assets\Animations\status-progress.json" />
+    <Resource Include="Assets\Animations\loading-mascot.json" />
+    <Resource Include="Assets\Animations\about-banner.json" />
   </ItemGroup>
 
 </Project>
