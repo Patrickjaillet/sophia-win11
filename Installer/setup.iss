@@ -1,5 +1,5 @@
 #define MyAppName "Sophia Script for Win11"
-#define MyAppVersion "0.1.0.0"
+#define MyAppVersion "0.9.0.0"
 #define MyAppPublisher "Patrick JAILLET"
 #define MyAppURL "https://patrickjaillet.github.io/sophia-win11"
 #define MyAppExeName "SophiaWin11.exe"
@@ -16,8 +16,8 @@ OutputDir=Output
 OutputBaseFilename=SophiaWin11-Setup
 Compression=lzma2
 SolidCompression=yes
-ArchitecturesAllowed=x64 arm64
-ArchitecturesInstallIn64BitMode=x64 arm64
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
 PrivilegesRequired=admin
 WizardStyle=modern
 
@@ -27,7 +27,7 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 
 [Files]
-Source: "..\src\SophiaWin11.App\bin\Release\net9.0-windows10.0.22621.0\publish\*"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "..\src\SophiaWin11.App\bin\Release\net9.0-windows10.0.22621.0\win-x64\publish\*"; DestDir: "{app}"; Flags: recursesubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
