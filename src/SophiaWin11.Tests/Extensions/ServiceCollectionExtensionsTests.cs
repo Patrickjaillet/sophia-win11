@@ -42,14 +42,6 @@ public sealed class ServiceCollectionExtensionsTests
     }
 
     [Fact]
-    public void AddSophiaCore_ResolvesBackupService()
-    {
-        using var provider = BuildProvider();
-        var service = provider.GetRequiredService<IBackupService>();
-        Assert.NotNull(service);
-    }
-
-    [Fact]
     public void AddSophiaCore_ResolvesLocalizationService()
     {
         using var provider = BuildProvider();

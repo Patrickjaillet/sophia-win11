@@ -57,7 +57,7 @@ public sealed class ConflictDetectionService : IConflictDetectionService
             return $"Both tweaks target '{target}', but at least one apply value could not be determined ahead of time.";
         }
 
-        if (Equals(first.ApplyValue, second.ApplyValue))
+        if (RegistryValueComparer.AreEqual(first.ApplyValue, second.ApplyValue))
         {
             return null;
         }

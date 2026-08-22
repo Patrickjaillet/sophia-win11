@@ -64,6 +64,22 @@ public sealed class ConflictDetectionServiceTests
     }
 
     [Fact]
+    public void DetectConflicts_TweaksTargetingSameValueWithEqualByteArrays_ReturnsNoConflict()
+    {
+        var binaryTarget = SharedTarget with { ValueKind = RegistryValueKind.Binary };
+        var virtualizer = new RegistryHiveVirtualizer();
+        var first = new RegistryTweak(
+            Guid.NewGuid(), "Test", "TweakA", "desc", binaryTarget, new byte[] { 0x01, 0x02 }, null, false, TweakRiskLevel.Low, virtualizer);
+        var second = new RegistryTweak(
+            Guid.NewGuid(), "Test", "TweakB", "desc", binaryTarget, new byte[] { 0x01, 0x02 }, null, false, TweakRiskLevel.Low, virtualizer);
+
+        var service = new ConflictDetectionService();
+        var conflicts = service.DetectConflicts([first, second]);
+
+        Assert.Empty(conflicts);
+    }
+
+    [Fact]
     public void DetectConflicts_NoTweaksSelected_ReturnsEmpty()
     {
         var service = new ConflictDetectionService();

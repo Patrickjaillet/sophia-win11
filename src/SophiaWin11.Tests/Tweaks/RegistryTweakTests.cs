@@ -13,6 +13,26 @@ public sealed class RegistryTweakTests
         "TestValue",
         RegistryValueKind.DWord);
 
+    private static readonly RegistryImpact BinaryTarget = new(
+        RegistryHive.CurrentUser,
+        "Software\\SophiaWin11Tests",
+        "BinaryValue",
+        RegistryValueKind.Binary);
+
+    [Fact]
+    public async Task IsAppliedAsync_ReturnsTrue_ForEqualByteArraysWithDifferentReferences()
+    {
+        var virtualizer = new RegistryHiveVirtualizer();
+        var applyValue = new byte[] { 0x01, 0x02, 0x03 };
+        var tweak = new RegistryTweak(
+            Guid.NewGuid(), "Test", "TestTweak", "desc", BinaryTarget, applyValue, null, false, TweakRiskLevel.Low, virtualizer);
+
+        await tweak.ApplyAsync();
+        virtualizer.Seed(BinaryTarget.Hive, BinaryTarget.SubKey, BinaryTarget.ValueName, new byte[] { 0x01, 0x02, 0x03 });
+
+        Assert.True(await tweak.IsAppliedAsync());
+    }
+
     [Fact]
     public async Task ApplyAsync_WritesApplyValue()
     {

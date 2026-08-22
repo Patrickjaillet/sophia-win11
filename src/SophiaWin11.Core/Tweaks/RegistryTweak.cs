@@ -52,7 +52,7 @@ public sealed class RegistryTweak : TweakBase
     protected override Task<bool> IsAppliedCoreAsync(CancellationToken cancellationToken)
     {
         var current = _registryService.GetValue(_target.Hive, _target.SubKey, _target.ValueName);
-        return Task.FromResult(Equals(current, _applyValue));
+        return Task.FromResult(RegistryValueComparer.AreEqual(current, _applyValue));
     }
 
     protected override Task<string> PreviewCoreAsync(CancellationToken cancellationToken)

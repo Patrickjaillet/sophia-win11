@@ -6,6 +6,7 @@ using SophiaWin11.Core.Abstractions;
 using SophiaWin11.UI.Controls;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Extensions;
 
 namespace SophiaWin11.App.ViewModels;
 
@@ -47,17 +48,29 @@ public sealed partial class ShellViewModel : ObservableObject
 
     public async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
-        await _tweakService.InitializeCatalogAsync(cancellationToken).ConfigureAwait(true);
-
-        var categoryCount = _tweakService.Tweaks.Select(tweak => tweak.Category).Distinct().Count();
-        BuildNavigationItems();
-
-        StatusText = $"{_tweakService.TweakCount} tweaks loaded across {categoryCount} categories.";
-        IsInitializing = false;
-
-        if (NavigationItems.OfType<NavigationViewItem>().FirstOrDefault() is { } firstItem)
+        try
         {
-            ActivateItem(firstItem, DashboardTag);
+            await _tweakService.InitializeCatalogAsync(cancellationToken).ConfigureAwait(true);
+
+            var categoryCount = _tweakService.Tweaks.Select(tweak => tweak.Category).Distinct().Count();
+            BuildNavigationItems();
+
+            StatusText = $"{_tweakService.TweakCount} tweaks loaded across {categoryCount} categories.";
+            IsInitializing = false;
+
+            if (NavigationItems.OfType<NavigationViewItem>().FirstOrDefault() is { } firstItem)
+            {
+                ActivateItem(firstItem, DashboardTag);
+            }
+        }
+        catch (Exception ex)
+        {
+            StatusText = $"Failed to load the tweak catalog: {ex.Message}";
+            _snackbarService.Show(
+                "Startup failed",
+                "The tweak catalog could not be loaded. See the log for details.",
+                ControlAppearance.Danger,
+                TimeSpan.FromSeconds(10));
         }
     }
 
