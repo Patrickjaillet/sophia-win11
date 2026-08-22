@@ -5,7 +5,9 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/) (4-segment: `MAJOR.MINOR.PATCH.BUILD`).
 
-## [Unreleased]
+## [1.0.0.0] - 2026-08-22
+
+Release candidate: feature freeze (v0.3.0.0 → v0.5.0.0 portage, v0.6.0.0 → v0.9.0.0 UI/theme/animation), full codebase review, and bug-fix pass. Zero residual comments, zero hardcoded visual values outside the theme dictionaries, project-wide.
 
 ### Fixed
 
@@ -20,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (4-segmen
 
 - `IThemeService`/`ThemeService` and `IAnimationService`/`AnimationService` (`SophiaWin11.Core`): dead code orphaned since `MainViewModel` was deleted in v0.6.0.0's UI rewrite — the real Art Déco theme is applied statically via `App.xaml` `ResourceDictionary` merging (v0.7.0.0) and the real reduced-motion gate is `SophiaWin11.UI/Animation/MotionPolicy.cs` (v0.8.0.0); `ThemeService.ApplyTheme()` did nothing beyond flipping a bool, and `AnimationService.AnimationsEnabled` was a hardcoded-`true` field nothing real ever read
 - `IBackupService`/`BackupService` (`SophiaWin11.Core`): both methods were `NotImplementedException` stubs since v0.2.0.0, never called from anywhere, fully superseded by the working `ITweakSnapshotService` (per-tweak registry snapshot) and `IRestorePointService` (real Windows System Restore points)
+
+### Known gaps at release
+
+- The manual test campaign across Windows 11 25H2 and Windows 11 Enterprise LTSC 2024 (Home/Pro/Enterprise) called for by this milestone was not performed — it requires a dedicated VM fleet not available in this environment.
+- The "stable 2h+, no memory leak (dotnet-trace)" acceptance criterion has only partial evidence: a 2-hour trace was started against the running app but the process was closed externally after ~14 minutes (confirmed unrelated to the application — a clean Generic Host shutdown, no exception). Those 14 minutes ran clean with no errors, but this falls short of the full 2h+ requirement.
 
 ## [0.9.0.0] - Unreleased
 
