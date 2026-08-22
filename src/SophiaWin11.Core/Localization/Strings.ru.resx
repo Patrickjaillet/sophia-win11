@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Nav_Dashboard" xml:space="preserve">
+    <value>Панель управления</value>
+  </data>
+  <data name="Nav_Search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>Параметры</value>
+  </data>
+  <data name="Shell_StatusLoading" xml:space="preserve">
+    <value>Загрузка каталога твиков...</value>
+  </data>
+  <data name="Shell_StatusLoaded" xml:space="preserve">
+    <value>Загружено твиков: {0} в {1} категориях.</value>
+  </data>
+  <data name="Shell_StatusLoadFailed" xml:space="preserve">
+    <value>Не удалось загрузить каталог твиков: {0}</value>
+  </data>
+  <data name="Shell_SnackbarStartupFailedTitle" xml:space="preserve">
+    <value>Ошибка запуска</value>
+  </data>
+  <data name="Shell_SnackbarStartupFailedMessage" xml:space="preserve">
+    <value>Не удалось загрузить каталог твиков. Подробности см. в журнале.</value>
+  </data>
+  <data name="Dashboard_Header" xml:space="preserve">
+    <value>Панель управления</value>
+  </data>
+  <data name="Dashboard_TotalTweaksLabel" xml:space="preserve">
+    <value>Всего твиков</value>
+  </data>
+  <data name="Dashboard_CurrentlyAppliedLabel" xml:space="preserve">
+    <value>Применено сейчас</value>
+  </data>
+  <data name="Dashboard_LastSessionHeader" xml:space="preserve">
+    <value>Последний сеанс</value>
+  </data>
+  <data name="Dashboard_LastSessionBody" xml:space="preserve">
+    <value>История сеансов пока не сохраняется между перезапусками приложения. Применение твиков с этой панели или со страницы категории сразу обновляет счётчики выше.</value>
+  </data>
+  <data name="Dashboard_LastSessionSummaryDefault" xml:space="preserve">
+    <value>Сеансов пока не было.</value>
+  </data>
+  <data name="Dashboard_ProfilesHeader" xml:space="preserve">
+    <value>Профили</value>
+  </data>
+  <data name="Dashboard_ProfilesDescription" xml:space="preserve">
+    <value>Сохраните текущий набор применённых твиков в файл .sophiaprofile или примените ранее сохранённый.</value>
+  </data>
+  <data name="Dashboard_LoadProfileButton" xml:space="preserve">
+    <value>Загрузить профиль</value>
+  </data>
+  <data name="Dashboard_SaveProfileButton" xml:space="preserve">
+    <value>Сохранить профиль</value>
+  </data>
+  <data name="Dashboard_RefreshButton" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="Dashboard_ProfileFileTypeName" xml:space="preserve">
+    <value>Профиль Sophia</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSavedTitle" xml:space="preserve">
+    <value>Профиль сохранён</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSavedMessage" xml:space="preserve">
+    <value>Сохранено твиков: {0} в файл «{1}».</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSaveFailedTitle" xml:space="preserve">
+    <value>Не удалось сохранить профиль</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadedTitle" xml:space="preserve">
+    <value>Профиль загружен</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadedMessage" xml:space="preserve">
+    <value>Применено {0} из {1} твиков из файла «{2}».</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileConflictTitle" xml:space="preserve">
+    <value>В профиле есть конфликтующие твики</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadFailedTitle" xml:space="preserve">
+    <value>Не удалось загрузить профиль</value>
+  </data>
+  <data name="Search_Header" xml:space="preserve">
+    <value>Поиск твиков</value>
+  </data>
+  <data name="Search_PlaceholderText" xml:space="preserve">
+    <value>Поиск по названию, описанию или категории...</value>
+  </data>
+  <data name="TweakRow_RestartRequiredBadge" xml:space="preserve">
+    <value>Требуется перезагрузка</value>
+  </data>
+  <data name="TweakRow_PreviewButton" xml:space="preserve">
+    <value>Просмотр</value>
+  </data>
+  <data name="TweakRow_ApplyButton" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="TweakRow_RevertButton" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
+  <data name="TweakRow_PreviewTitle" xml:space="preserve">
+    <value>Предпросмотр: {0}</value>
+  </data>
+  <data name="TweakRow_PreviewNoChanges" xml:space="preserve">
+    <value>Изменений не будет.</value>
+  </data>
+  <data name="TweakRow_PreviewFailedTitle" xml:space="preserve">
+    <value>Ошибка предпросмотра</value>
+  </data>
+  <data name="TweakRow_PreviewFailedMessage" xml:space="preserve">
+    <value>Не удалось выполнить предпросмотр «{0}»: {1}</value>
+  </data>
+  <data name="TweakRow_SuccessTitle" xml:space="preserve">
+    <value>Успешно</value>
+  </data>
+  <data name="TweakRow_SuccessMessage" xml:space="preserve">
+    <value>«{0}»: {1}.</value>
+  </data>
+  <data name="TweakRow_AppliedVerb" xml:space="preserve">
+    <value>применён</value>
+  </data>
+  <data name="TweakRow_RevertedVerb" xml:space="preserve">
+    <value>отменён</value>
+  </data>
+  <data name="TweakRow_ConflictTitle" xml:space="preserve">
+    <value>Обнаружен конфликт</value>
+  </data>
+  <data name="TweakRow_ConflictMessage" xml:space="preserve">
+    <value>«{0}» конфликтует с другим твиком: {1}</value>
+  </data>
+  <data name="TweakRow_FailedTitle" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="TweakRow_FailedMessage" xml:space="preserve">
+    <value>Не удалось применить «{0}»: {1}</value>
+  </data>
+  <data name="RiskLevel_Low" xml:space="preserve">
+    <value>Низкий</value>
+  </data>
+  <data name="RiskLevel_Medium" xml:space="preserve">
+    <value>Средний</value>
+  </data>
+  <data name="RiskLevel_High" xml:space="preserve">
+    <value>Высокий</value>
+  </data>
+  <data name="Settings_Header" xml:space="preserve">
+    <value>Параметры</value>
+  </data>
+  <data name="Settings_LanguageLabel" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="Settings_LanguageDescription" xml:space="preserve">
+    <value>Выберите язык интерфейса приложения. Изменение применяется немедленно.</value>
+  </data>
+</root>

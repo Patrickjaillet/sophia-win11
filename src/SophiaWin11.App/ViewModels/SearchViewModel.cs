@@ -13,15 +13,17 @@ public sealed partial class SearchViewModel : ObservableObject
     private readonly ITweakService _tweakService;
     private readonly ISnackbarService _snackbarService;
     private readonly ISessionService _sessionService;
+    private readonly ILocalizationService _localizationService;
 
     [ObservableProperty]
     private string query = string.Empty;
 
-    public SearchViewModel(ITweakService tweakService, ISnackbarService snackbarService, ISessionService sessionService)
+    public SearchViewModel(ITweakService tweakService, ISnackbarService snackbarService, ISessionService sessionService, ILocalizationService localizationService)
     {
         _tweakService = tweakService;
         _snackbarService = snackbarService;
         _sessionService = sessionService;
+        _localizationService = localizationService;
         Results = new ObservableCollection<TweakRowViewModel>();
         RefreshResults();
     }
@@ -38,7 +40,7 @@ public sealed partial class SearchViewModel : ObservableObject
 
         foreach (var tweak in matches)
         {
-            Results.Add(new TweakRowViewModel(tweak, _snackbarService, _sessionService));
+            Results.Add(new TweakRowViewModel(tweak, _snackbarService, _sessionService, _localizationService));
         }
 
         _ = RefreshAppliedStateAsync();

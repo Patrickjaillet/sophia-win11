@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Nav_Dashboard" xml:space="preserve">
+    <value>Übersicht</value>
+  </data>
+  <data name="Nav_Search" xml:space="preserve">
+    <value>Suche</value>
+  </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="Shell_StatusLoading" xml:space="preserve">
+    <value>Tweak-Katalog wird geladen...</value>
+  </data>
+  <data name="Shell_StatusLoaded" xml:space="preserve">
+    <value>{0} Tweaks in {1} Kategorien geladen.</value>
+  </data>
+  <data name="Shell_StatusLoadFailed" xml:space="preserve">
+    <value>Der Tweak-Katalog konnte nicht geladen werden: {0}</value>
+  </data>
+  <data name="Shell_SnackbarStartupFailedTitle" xml:space="preserve">
+    <value>Start fehlgeschlagen</value>
+  </data>
+  <data name="Shell_SnackbarStartupFailedMessage" xml:space="preserve">
+    <value>Der Tweak-Katalog konnte nicht geladen werden. Weitere Details finden Sie im Protokoll.</value>
+  </data>
+  <data name="Dashboard_Header" xml:space="preserve">
+    <value>Übersicht</value>
+  </data>
+  <data name="Dashboard_TotalTweaksLabel" xml:space="preserve">
+    <value>Tweaks insgesamt</value>
+  </data>
+  <data name="Dashboard_CurrentlyAppliedLabel" xml:space="preserve">
+    <value>Derzeit angewendet</value>
+  </data>
+  <data name="Dashboard_LastSessionHeader" xml:space="preserve">
+    <value>Letzte Sitzung</value>
+  </data>
+  <data name="Dashboard_LastSessionBody" xml:space="preserve">
+    <value>Der Sitzungsverlauf wird derzeit nicht über App-Neustarts hinweg gespeichert. Das Anwenden von Tweaks über diese Übersicht oder eine Kategorieseite aktualisiert die obigen Zähler sofort.</value>
+  </data>
+  <data name="Dashboard_LastSessionSummaryDefault" xml:space="preserve">
+    <value>Noch keine Sitzung.</value>
+  </data>
+  <data name="Dashboard_ProfilesHeader" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Dashboard_ProfilesDescription" xml:space="preserve">
+    <value>Speichern Sie die derzeit angewendeten Tweaks in einer .sophiaprofile-Datei oder wenden Sie ein vorhandenes Profil an.</value>
+  </data>
+  <data name="Dashboard_LoadProfileButton" xml:space="preserve">
+    <value>Profil laden</value>
+  </data>
+  <data name="Dashboard_SaveProfileButton" xml:space="preserve">
+    <value>Profil speichern</value>
+  </data>
+  <data name="Dashboard_RefreshButton" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="Dashboard_ProfileFileTypeName" xml:space="preserve">
+    <value>Sophia-Profil</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSavedTitle" xml:space="preserve">
+    <value>Profil gespeichert</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSavedMessage" xml:space="preserve">
+    <value>{0} angewendete(r) Tweak(s) in &apos;{1}&apos; gespeichert.</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSaveFailedTitle" xml:space="preserve">
+    <value>Profil konnte nicht gespeichert werden</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadedTitle" xml:space="preserve">
+    <value>Profil geladen</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadedMessage" xml:space="preserve">
+    <value>{0} von {1} Tweak(s) aus &apos;{2}&apos; angewendet.</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileConflictTitle" xml:space="preserve">
+    <value>Profil enthält widersprüchliche Tweaks</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadFailedTitle" xml:space="preserve">
+    <value>Profil konnte nicht geladen werden</value>
+  </data>
+  <data name="Search_Header" xml:space="preserve">
+    <value>Tweaks durchsuchen</value>
+  </data>
+  <data name="Search_PlaceholderText" xml:space="preserve">
+    <value>Suche nach Name, Beschreibung oder Kategorie...</value>
+  </data>
+  <data name="TweakRow_RestartRequiredBadge" xml:space="preserve">
+    <value>Neustart erforderlich</value>
+  </data>
+  <data name="TweakRow_PreviewButton" xml:space="preserve">
+    <value>Vorschau</value>
+  </data>
+  <data name="TweakRow_ApplyButton" xml:space="preserve">
+    <value>Anwenden</value>
+  </data>
+  <data name="TweakRow_RevertButton" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="TweakRow_PreviewTitle" xml:space="preserve">
+    <value>Vorschau: {0}</value>
+  </data>
+  <data name="TweakRow_PreviewNoChanges" xml:space="preserve">
+    <value>Es würden keine Änderungen vorgenommen.</value>
+  </data>
+  <data name="TweakRow_PreviewFailedTitle" xml:space="preserve">
+    <value>Vorschau fehlgeschlagen</value>
+  </data>
+  <data name="TweakRow_PreviewFailedMessage" xml:space="preserve">
+    <value>Vorschau für &apos;{0}&apos; nicht möglich: {1}</value>
+  </data>
+  <data name="TweakRow_SuccessTitle" xml:space="preserve">
+    <value>Erfolg</value>
+  </data>
+  <data name="TweakRow_SuccessMessage" xml:space="preserve">
+    <value>&apos;{0}&apos; wurde {1}.</value>
+  </data>
+  <data name="TweakRow_AppliedVerb" xml:space="preserve">
+    <value>angewendet</value>
+  </data>
+  <data name="TweakRow_RevertedVerb" xml:space="preserve">
+    <value>zurückgesetzt</value>
+  </data>
+  <data name="TweakRow_ConflictTitle" xml:space="preserve">
+    <value>Konflikt erkannt</value>
+  </data>
+  <data name="TweakRow_ConflictMessage" xml:space="preserve">
+    <value>&apos;{0}&apos; steht im Konflikt mit einem anderen Tweak: {1}</value>
+  </data>
+  <data name="TweakRow_FailedTitle" xml:space="preserve">
+    <value>Fehlgeschlagen</value>
+  </data>
+  <data name="TweakRow_FailedMessage" xml:space="preserve">
+    <value>&apos;{0}&apos; konnte nicht angewendet werden: {1}</value>
+  </data>
+  <data name="RiskLevel_Low" xml:space="preserve">
+    <value>Niedrig</value>
+  </data>
+  <data name="RiskLevel_Medium" xml:space="preserve">
+    <value>Mittel</value>
+  </data>
+  <data name="RiskLevel_High" xml:space="preserve">
+    <value>Hoch</value>
+  </data>
+  <data name="Settings_Header" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="Settings_LanguageLabel" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="Settings_LanguageDescription" xml:space="preserve">
+    <value>Wählen Sie die in der gesamten App verwendete Sprache. Die Änderung wird sofort wirksam.</value>
+  </data>
+</root>

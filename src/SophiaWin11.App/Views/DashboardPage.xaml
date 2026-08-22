@@ -4,13 +4,14 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              d:DataContext="{d:DesignInstance Type=vm:DashboardViewModel}"
              xmlns:vm="clr-namespace:SophiaWin11.App.ViewModels"
+             xmlns:loc="clr-namespace:SophiaWin11.App.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24">
         <StackPanel MaxWidth="960" HorizontalAlignment="Stretch">
-            <TextBlock Text="Dashboard"
+            <TextBlock Text="{loc:Translate Key=Dashboard_Header}"
                        FontFamily="{DynamicResource FontFamilyDisplay}"
                        FontSize="{DynamicResource FontSizeDisplayLarge}"
                        FontWeight="SemiBold"
@@ -24,7 +25,7 @@
                     </ui:CardControl.Icon>
                     <ui:CardControl.Header>
                         <StackPanel>
-                            <TextBlock Text="Total tweaks"
+                            <TextBlock Text="{loc:Translate Key=Dashboard_TotalTweaksLabel}"
                                        FontFamily="{DynamicResource FontFamilyBody}"
                                        Foreground="{DynamicResource BrushTextSecondary}"
                                        FontSize="{DynamicResource FontSizeCaption}" />
@@ -42,7 +43,7 @@
                     </ui:CardControl.Icon>
                     <ui:CardControl.Header>
                         <StackPanel>
-                            <TextBlock Text="Currently applied"
+                            <TextBlock Text="{loc:Translate Key=Dashboard_CurrentlyAppliedLabel}"
                                        FontFamily="{DynamicResource FontFamilyBody}"
                                        Foreground="{DynamicResource BrushTextSecondary}"
                                        FontSize="{DynamicResource FontSizeCaption}" />
@@ -63,7 +64,7 @@
                               Margin="0,0,0,16">
                 <ui:CardExpander.Header>
                     <StackPanel>
-                        <TextBlock Text="Last session"
+                        <TextBlock Text="{loc:Translate Key=Dashboard_LastSessionHeader}"
                                    FontFamily="{DynamicResource FontFamilyBody}"
                                    FontWeight="SemiBold" />
                         <TextBlock Text="{Binding LastSessionSummary}"
@@ -76,16 +77,16 @@
                            FontFamily="{DynamicResource FontFamilyBody}"
                            Foreground="{DynamicResource BrushTextSecondary}"
                            Margin="0,8,0,8"
-                           Text="Session history is not persisted across app restarts yet. Applying tweaks from this dashboard or a category page updates the counts above immediately." />
+                           Text="{loc:Translate Key=Dashboard_LastSessionBody}" />
             </ui:CardExpander>
 
             <ui:CardControl Icon="{ui:SymbolIcon FolderOpen24}">
                 <ui:CardControl.Header>
                     <StackPanel>
-                        <TextBlock Text="Profiles"
+                        <TextBlock Text="{loc:Translate Key=Dashboard_ProfilesHeader}"
                                    FontFamily="{DynamicResource FontFamilyBody}"
                                    FontWeight="SemiBold" />
-                        <TextBlock Text="Save currently applied tweaks to a .sophiaprofile file, or apply one back."
+                        <TextBlock Text="{loc:Translate Key=Dashboard_ProfilesDescription}"
                                    FontFamily="{DynamicResource FontFamilyBody}"
                                    Foreground="{DynamicResource BrushTextSecondary}"
                                    FontSize="{DynamicResource FontSizeCaption}"
@@ -93,9 +94,9 @@
                     </StackPanel>
                 </ui:CardControl.Header>
                 <StackPanel Orientation="Horizontal">
-                    <ui:Button Content="Load profile" Command="{Binding LoadProfileCommand}" />
-                    <ui:Button Content="Save profile" Margin="8,0,0,0" Command="{Binding SaveProfileCommand}" />
-                    <ui:Button Content="Refresh" Margin="8,0,0,0" Command="{Binding RefreshCommand}" Appearance="Secondary" />
+                    <ui:Button Content="{loc:Translate Key=Dashboard_LoadProfileButton}" Command="{Binding LoadProfileCommand}" />
+                    <ui:Button Content="{loc:Translate Key=Dashboard_SaveProfileButton}" Margin="8,0,0,0" Command="{Binding SaveProfileCommand}" />
+                    <ui:Button Content="{loc:Translate Key=Dashboard_RefreshButton}" Margin="8,0,0,0" Command="{Binding RefreshCommand}" Appearance="Secondary" />
                 </StackPanel>
             </ui:CardControl>
         </StackPanel>

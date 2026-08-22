@@ -14,13 +14,16 @@ public sealed partial class ShellViewModel : ObservableObject
 {
     public const string DashboardTag = "dashboard";
     public const string SearchTag = "search";
+    public const string SettingsTag = "settings";
 
     private readonly ITweakService _tweakService;
     private readonly IElevationService _elevationService;
     private readonly ISnackbarService _snackbarService;
     private readonly ISessionService _sessionService;
+    private readonly ILocalizationService _localizationService;
 
     private NavigationViewItem? _activeItem;
+    private string _activeTag = DashboardTag;
 
     [ObservableProperty]
     private bool isElevated;
@@ -29,22 +32,36 @@ public sealed partial class ShellViewModel : ObservableObject
     private bool isInitializing = true;
 
     [ObservableProperty]
-    private string statusText = "Loading tweak catalog...";
+    private string statusText;
 
-    public ShellViewModel(ITweakService tweakService, IElevationService elevationService, ISnackbarService snackbarService, ISessionService sessionService)
+    public ShellViewModel(ITweakService tweakService, IElevationService elevationService, ISnackbarService snackbarService, ISessionService sessionService, ILocalizationService localizationService)
     {
         _tweakService = tweakService;
         _elevationService = elevationService;
         _snackbarService = snackbarService;
         _sessionService = sessionService;
+        _localizationService = localizationService;
 
         IsElevated = _elevationService.IsRunningElevated;
         NavigationItems = new ObservableCollection<object>();
+        statusText = _localizationService.GetString("Shell_StatusLoading");
+
+        _localizationService.PropertyChanged += OnLocalizationPropertyChanged;
     }
 
     public event Action<string>? NavigationRequested;
 
     public ObservableCollection<object> NavigationItems { get; }
+
+    private static readonly IReadOnlyList<string> CategoryIconKeysInCatalogOrder =
+    [
+        "IconGeometryPrivacyTelemetry",
+        "IconGeometryUiPersonalization",
+        "IconGeometrySystem",
+        "IconGeometryGaming",
+        "IconGeometryDefenderSecurity",
+        "IconGeometryContextMenu",
+    ];
 
     public async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
@@ -55,7 +72,7 @@ public sealed partial class ShellViewModel : ObservableObject
             var categoryCount = _tweakService.Tweaks.Select(tweak => tweak.Category).Distinct().Count();
             BuildNavigationItems();
 
-            StatusText = $"{_tweakService.TweakCount} tweaks loaded across {categoryCount} categories.";
+            StatusText = string.Format(_localizationService.GetString("Shell_StatusLoaded"), _tweakService.TweakCount, categoryCount);
             IsInitializing = false;
 
             if (NavigationItems.OfType<NavigationViewItem>().FirstOrDefault() is { } firstItem)
@@ -65,20 +82,51 @@ public sealed partial class ShellViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            StatusText = $"Failed to load the tweak catalog: {ex.Message}";
+            StatusText = string.Format(_localizationService.GetString("Shell_StatusLoadFailed"), ex.Message);
             _snackbarService.Show(
-                "Startup failed",
-                "The tweak catalog could not be loaded. See the log for details.",
+                _localizationService.GetString("Shell_SnackbarStartupFailedTitle"),
+                _localizationService.GetString("Shell_SnackbarStartupFailedMessage"),
                 ControlAppearance.Danger,
                 TimeSpan.FromSeconds(10));
         }
     }
 
-    public CategoryViewModel CreateCategoryViewModel(string category)
+    public const string CategoryTagPrefix = "cat:";
+
+    public CategoryViewModel CreateCategoryViewModel(string tag)
     {
+        var categoriesInCatalogOrder = _tweakService.Tweaks.Select(tweak => tweak.Category).Distinct().ToList();
+        var index = int.Parse(tag[CategoryTagPrefix.Length..]);
+        var category = categoriesInCatalogOrder[index];
+
         var tweaks = _tweakService.Tweaks.Where(tweak => tweak.Category == category).ToList();
-        return new CategoryViewModel(category, tweaks, _snackbarService, _sessionService);
+        return new CategoryViewModel(category, tweaks, _snackbarService, _sessionService, _localizationService);
     }
+
+    private async void OnLocalizationPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(ILocalizationService.CurrentCulture))
+        {
+            return;
+        }
+
+        await _tweakService.InitializeCatalogAsync().ConfigureAwait(true);
+
+        var previousTag = _activeTag;
+        BuildNavigationItems();
+
+        var itemToActivate = NavigationItems.OfType<NavigationViewItem>()
+            .FirstOrDefault(item => Equals(item.Tag, previousTag));
+
+        if (itemToActivate is not null)
+        {
+            ActivateItem(itemToActivate, previousTag);
+        }
+
+        LanguageChanged?.Invoke(previousTag);
+    }
+
+    public event Action<string>? LanguageChanged;
 
     private void BuildNavigationItems()
     {
@@ -86,7 +134,7 @@ public sealed partial class ShellViewModel : ObservableObject
 
         var dashboardItem = new NavigationViewItem
         {
-            Content = "Dashboard",
+            Content = _localizationService.GetString("Nav_Dashboard"),
             Tag = DashboardTag,
             Icon = CreateIcon("IconGeometryDashboard"),
         };
@@ -95,41 +143,50 @@ public sealed partial class ShellViewModel : ObservableObject
 
         var searchItem = new NavigationViewItem
         {
-            Content = "Search",
+            Content = _localizationService.GetString("Nav_Search"),
             Tag = SearchTag,
             Icon = CreateIcon("IconGeometrySearch"),
         };
         searchItem.Click += (_, _) => ActivateItem(searchItem, SearchTag);
         NavigationItems.Add(searchItem);
 
-        var categories = _tweakService.Tweaks
+        var settingsItem = new NavigationViewItem
+        {
+            Content = _localizationService.GetString("Nav_Settings"),
+            Tag = SettingsTag,
+            Icon = CreateIcon("IconGeometrySystem"),
+        };
+        settingsItem.Click += (_, _) => ActivateItem(settingsItem, SettingsTag);
+        NavigationItems.Add(settingsItem);
+
+        var categoriesInCatalogOrder = _tweakService.Tweaks
             .Select(tweak => tweak.Category)
             .Distinct()
-            .OrderBy(category => category, StringComparer.OrdinalIgnoreCase);
+            .ToList();
+
+        var iconKeyByCategory = new Dictionary<string, string>();
+        for (var index = 0; index < categoriesInCatalogOrder.Count; index++)
+        {
+            iconKeyByCategory[categoriesInCatalogOrder[index]] = index < CategoryIconKeysInCatalogOrder.Count
+                ? CategoryIconKeysInCatalogOrder[index]
+                : "IconGeometrySystem";
+        }
+
+        var categories = categoriesInCatalogOrder.OrderBy(category => category, StringComparer.OrdinalIgnoreCase);
 
         foreach (var category in categories)
         {
+            var categoryTag = CategoryTagPrefix + categoriesInCatalogOrder.IndexOf(category);
             var categoryItem = new NavigationViewItem
             {
                 Content = category,
-                Tag = category,
-                Icon = CreateIcon(ResolveCategoryIconKey(category)),
+                Tag = categoryTag,
+                Icon = CreateIcon(iconKeyByCategory[category]),
             };
-            categoryItem.Click += (_, _) => ActivateItem(categoryItem, category);
+            categoryItem.Click += (_, _) => ActivateItem(categoryItem, categoryTag);
             NavigationItems.Add(categoryItem);
         }
     }
-
-    private static string ResolveCategoryIconKey(string category) => category switch
-    {
-        "Privacy & Telemetry" => "IconGeometryPrivacyTelemetry",
-        "UI & Personalization" => "IconGeometryUiPersonalization",
-        "System" => "IconGeometrySystem",
-        "Gaming" => "IconGeometryGaming",
-        "Microsoft Defender & Security" => "IconGeometryDefenderSecurity",
-        "Context menu" => "IconGeometryContextMenu",
-        _ => "IconGeometrySystem",
-    };
 
     private static ArtDecoIcon CreateIcon(string geometryResourceKey)
     {
@@ -146,6 +203,7 @@ public sealed partial class ShellViewModel : ObservableObject
 
         item.IsActive = true;
         _activeItem = item;
+        _activeTag = tag;
 
         NavigationRequested?.Invoke(tag);
     }

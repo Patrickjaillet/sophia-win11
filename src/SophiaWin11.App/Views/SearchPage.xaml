@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:vm="clr-namespace:SophiaWin11.App.ViewModels"
+             xmlns:loc="clr-namespace:SophiaWin11.App.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance Type=vm:SearchViewModel}"
@@ -15,13 +16,13 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="0,0,0,16">
-            <TextBlock Text="Search tweaks"
+            <TextBlock Text="{loc:Translate Key=Search_Header}"
                        FontFamily="{DynamicResource FontFamilyDisplay}"
                        FontSize="{DynamicResource FontSizeDisplayLarge}"
                        FontWeight="SemiBold"
                        Foreground="{DynamicResource BrushAccentGold}"
                        Margin="0,0,0,12" />
-            <ui:TextBox PlaceholderText="Search by name, description or category..."
+            <ui:TextBox PlaceholderText="{loc:Translate Key=Search_PlaceholderText}"
                         Text="{Binding Query, UpdateSourceTrigger=PropertyChanged}"
                         Icon="{ui:SymbolIcon Search24}"
                         ClearButtonEnabled="True" />

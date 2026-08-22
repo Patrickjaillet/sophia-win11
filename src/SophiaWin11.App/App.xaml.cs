@@ -2,8 +2,10 @@ using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using SophiaWin11.App.Localization;
 using SophiaWin11.App.ViewModels;
 using SophiaWin11.App.Views;
+using SophiaWin11.Core.Abstractions;
 using SophiaWin11.Core.Extensions;
 using Wpf.Ui;
 
@@ -32,6 +34,10 @@ public partial class App : Application
 
         _host.Start();
 
+        var localizationService = _host.Services.GetRequiredService<ILocalizationService>();
+        localizationService.InitializeAsync().GetAwaiter().GetResult();
+        TranslateExtension.LocalizationService = localizationService;
+
         var mainWindow = _host.Services.GetRequiredService<MainWindow>();
         mainWindow.Show();
     }
@@ -49,6 +55,8 @@ public partial class App : Application
         services.AddTransient<SearchViewModel>();
         services.AddTransient<SearchPage>();
         services.AddTransient<CategoryPage>();
+        services.AddTransient<SettingsViewModel>();
+        services.AddTransient<SettingsPage>();
     }
 
     protected override void OnExit(ExitEventArgs e)

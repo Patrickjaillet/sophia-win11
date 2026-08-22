@@ -10,11 +10,11 @@ public sealed partial class CategoryViewModel : ObservableObject
     [ObservableProperty]
     private bool isLoading = true;
 
-    public CategoryViewModel(string category, IReadOnlyList<ITweak> tweaks, ISnackbarService snackbarService, ISessionService sessionService)
+    public CategoryViewModel(string category, IReadOnlyList<ITweak> tweaks, ISnackbarService snackbarService, ISessionService sessionService, ILocalizationService localizationService)
     {
         CategoryName = category;
         Tweaks = new ObservableCollection<TweakRowViewModel>(
-            tweaks.Select((tweak, index) => new TweakRowViewModel(tweak, snackbarService, sessionService) { Index = index }));
+            tweaks.Select((tweak, index) => new TweakRowViewModel(tweak, snackbarService, sessionService, localizationService) { Index = index }));
     }
 
     public string CategoryName { get; }

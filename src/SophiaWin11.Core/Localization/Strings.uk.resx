@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Nav_Dashboard" xml:space="preserve">
+    <value>Панель приладів</value>
+  </data>
+  <data name="Nav_Search" xml:space="preserve">
+    <value>Пошук</value>
+  </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>Параметри</value>
+  </data>
+  <data name="Shell_StatusLoading" xml:space="preserve">
+    <value>Завантаження каталогу твіків...</value>
+  </data>
+  <data name="Shell_StatusLoaded" xml:space="preserve">
+    <value>Завантажено {0} твіків у {1} категоріях.</value>
+  </data>
+  <data name="Shell_StatusLoadFailed" xml:space="preserve">
+    <value>Не вдалося завантажити каталог твіків: {0}</value>
+  </data>
+  <data name="Shell_SnackbarStartupFailedTitle" xml:space="preserve">
+    <value>Помилка запуску</value>
+  </data>
+  <data name="Shell_SnackbarStartupFailedMessage" xml:space="preserve">
+    <value>Не вдалося завантажити каталог твіків. Подробиці див. у журналі.</value>
+  </data>
+  <data name="Dashboard_Header" xml:space="preserve">
+    <value>Панель приладів</value>
+  </data>
+  <data name="Dashboard_TotalTweaksLabel" xml:space="preserve">
+    <value>Усього твіків</value>
+  </data>
+  <data name="Dashboard_CurrentlyAppliedLabel" xml:space="preserve">
+    <value>Наразі застосовано</value>
+  </data>
+  <data name="Dashboard_LastSessionHeader" xml:space="preserve">
+    <value>Останній сеанс</value>
+  </data>
+  <data name="Dashboard_LastSessionBody" xml:space="preserve">
+    <value>Історія сеансів поки не зберігається між перезапусками застосунку. Застосування твіків із цієї панелі або сторінки категорії одразу оновлює лічильники вище.</value>
+  </data>
+  <data name="Dashboard_LastSessionSummaryDefault" xml:space="preserve">
+    <value>Ще не було жодного сеансу.</value>
+  </data>
+  <data name="Dashboard_ProfilesHeader" xml:space="preserve">
+    <value>Профілі</value>
+  </data>
+  <data name="Dashboard_ProfilesDescription" xml:space="preserve">
+    <value>Збережіть застосовані твіки у файл .sophiaprofile або застосуйте раніше збережений профіль.</value>
+  </data>
+  <data name="Dashboard_LoadProfileButton" xml:space="preserve">
+    <value>Завантажити профіль</value>
+  </data>
+  <data name="Dashboard_SaveProfileButton" xml:space="preserve">
+    <value>Зберегти профіль</value>
+  </data>
+  <data name="Dashboard_RefreshButton" xml:space="preserve">
+    <value>Оновити</value>
+  </data>
+  <data name="Dashboard_ProfileFileTypeName" xml:space="preserve">
+    <value>Профіль Sophia</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSavedTitle" xml:space="preserve">
+    <value>Профіль збережено</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSavedMessage" xml:space="preserve">
+    <value>Збережено {0} застосованих твіків у файл &apos;{1}&apos;.</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSaveFailedTitle" xml:space="preserve">
+    <value>Не вдалося зберегти профіль</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadedTitle" xml:space="preserve">
+    <value>Профіль завантажено</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadedMessage" xml:space="preserve">
+    <value>Застосовано {0} із {1} твіків із файлу &apos;{2}&apos;.</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileConflictTitle" xml:space="preserve">
+    <value>Профіль містить конфліктні твіки</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadFailedTitle" xml:space="preserve">
+    <value>Не вдалося завантажити профіль</value>
+  </data>
+  <data name="Search_Header" xml:space="preserve">
+    <value>Пошук твіків</value>
+  </data>
+  <data name="Search_PlaceholderText" xml:space="preserve">
+    <value>Пошук за назвою, описом або категорією...</value>
+  </data>
+  <data name="TweakRow_RestartRequiredBadge" xml:space="preserve">
+    <value>Потрібен перезапуск</value>
+  </data>
+  <data name="TweakRow_PreviewButton" xml:space="preserve">
+    <value>Перегляд</value>
+  </data>
+  <data name="TweakRow_ApplyButton" xml:space="preserve">
+    <value>Застосувати</value>
+  </data>
+  <data name="TweakRow_RevertButton" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="TweakRow_PreviewTitle" xml:space="preserve">
+    <value>Перегляд: {0}</value>
+  </data>
+  <data name="TweakRow_PreviewNoChanges" xml:space="preserve">
+    <value>Змін не буде внесено.</value>
+  </data>
+  <data name="TweakRow_PreviewFailedTitle" xml:space="preserve">
+    <value>Помилка перегляду</value>
+  </data>
+  <data name="TweakRow_PreviewFailedMessage" xml:space="preserve">
+    <value>Не вдалося переглянути &apos;{0}&apos;: {1}</value>
+  </data>
+  <data name="TweakRow_SuccessTitle" xml:space="preserve">
+    <value>Успішно</value>
+  </data>
+  <data name="TweakRow_SuccessMessage" xml:space="preserve">
+    <value>&apos;{0}&apos; було {1}.</value>
+  </data>
+  <data name="TweakRow_AppliedVerb" xml:space="preserve">
+    <value>застосовано</value>
+  </data>
+  <data name="TweakRow_RevertedVerb" xml:space="preserve">
+    <value>скасовано</value>
+  </data>
+  <data name="TweakRow_ConflictTitle" xml:space="preserve">
+    <value>Виявлено конфлікт</value>
+  </data>
+  <data name="TweakRow_ConflictMessage" xml:space="preserve">
+    <value>&apos;{0}&apos; конфліктує з іншим твіком: {1}</value>
+  </data>
+  <data name="TweakRow_FailedTitle" xml:space="preserve">
+    <value>Помилка</value>
+  </data>
+  <data name="TweakRow_FailedMessage" xml:space="preserve">
+    <value>Не вдалося застосувати &apos;{0}&apos;: {1}</value>
+  </data>
+  <data name="RiskLevel_Low" xml:space="preserve">
+    <value>Низький</value>
+  </data>
+  <data name="RiskLevel_Medium" xml:space="preserve">
+    <value>Середній</value>
+  </data>
+  <data name="RiskLevel_High" xml:space="preserve">
+    <value>Високий</value>
+  </data>
+  <data name="Settings_Header" xml:space="preserve">
+    <value>Параметри</value>
+  </data>
+  <data name="Settings_LanguageLabel" xml:space="preserve">
+    <value>Мова</value>
+  </data>
+  <data name="Settings_LanguageDescription" xml:space="preserve">
+    <value>Виберіть мову інтерфейсу застосунку. Зміна набуде чинності негайно.</value>
+  </data>
+</root>

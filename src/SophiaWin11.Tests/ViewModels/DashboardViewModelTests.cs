@@ -18,7 +18,7 @@ public sealed class DashboardViewModelTests
             new FakeTweak("System", "C", "descC", initiallyApplied: true),
         };
         var tweakService = new FakeTweakService(tweaks);
-        var viewModel = new DashboardViewModel(tweakService, new ProfileService(), new FakeSnackbarService(), new FakeSessionService());
+        var viewModel = new DashboardViewModel(tweakService, new ProfileService(), new FakeSnackbarService(), new FakeSessionService(), new FakeLocalizationService());
 
         await WaitForConditionAsync(() => !viewModel.IsLoading);
 
@@ -34,7 +34,7 @@ public sealed class DashboardViewModelTests
             new FakeTweak("System", "A", "descA", initiallyApplied: false),
         };
         var tweakService = new FakeTweakService(tweaks);
-        var viewModel = new DashboardViewModel(tweakService, new ProfileService(), new FakeSnackbarService(), new FakeSessionService());
+        var viewModel = new DashboardViewModel(tweakService, new ProfileService(), new FakeSnackbarService(), new FakeSessionService(), new FakeLocalizationService());
 
         await WaitForConditionAsync(() => !viewModel.IsLoading);
         Assert.Equal(0, viewModel.AppliedTweaksCount);

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Nav_Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Nav_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Shell_StatusLoading" xml:space="preserve">
+    <value>Loading tweak catalog...</value>
+  </data>
+  <data name="Shell_StatusLoaded" xml:space="preserve">
+    <value>{0} tweaks loaded across {1} categories.</value>
+  </data>
+  <data name="Shell_StatusLoadFailed" xml:space="preserve">
+    <value>Failed to load the tweak catalog: {0}</value>
+  </data>
+  <data name="Shell_SnackbarStartupFailedTitle" xml:space="preserve">
+    <value>Startup failed</value>
+  </data>
+  <data name="Shell_SnackbarStartupFailedMessage" xml:space="preserve">
+    <value>The tweak catalog could not be loaded. See the log for details.</value>
+  </data>
+  <data name="Dashboard_Header" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Dashboard_TotalTweaksLabel" xml:space="preserve">
+    <value>Total tweaks</value>
+  </data>
+  <data name="Dashboard_CurrentlyAppliedLabel" xml:space="preserve">
+    <value>Currently applied</value>
+  </data>
+  <data name="Dashboard_LastSessionHeader" xml:space="preserve">
+    <value>Last session</value>
+  </data>
+  <data name="Dashboard_LastSessionBody" xml:space="preserve">
+    <value>Session history is not persisted across app restarts yet. Applying tweaks from this dashboard or a category page updates the counts above immediately.</value>
+  </data>
+  <data name="Dashboard_LastSessionSummaryDefault" xml:space="preserve">
+    <value>No session yet.</value>
+  </data>
+  <data name="Dashboard_ProfilesHeader" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="Dashboard_ProfilesDescription" xml:space="preserve">
+    <value>Save currently applied tweaks to a .sophiaprofile file, or apply one back.</value>
+  </data>
+  <data name="Dashboard_LoadProfileButton" xml:space="preserve">
+    <value>Load profile</value>
+  </data>
+  <data name="Dashboard_SaveProfileButton" xml:space="preserve">
+    <value>Save profile</value>
+  </data>
+  <data name="Dashboard_RefreshButton" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Dashboard_ProfileFileTypeName" xml:space="preserve">
+    <value>Sophia profile</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSavedTitle" xml:space="preserve">
+    <value>Profile saved</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSavedMessage" xml:space="preserve">
+    <value>Saved {0} applied tweak(s) to '{1}'.</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSaveFailedTitle" xml:space="preserve">
+    <value>Could not save profile</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadedTitle" xml:space="preserve">
+    <value>Profile loaded</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadedMessage" xml:space="preserve">
+    <value>Applied {0} of {1} tweak(s) from '{2}'.</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileConflictTitle" xml:space="preserve">
+    <value>Profile has conflicting tweaks</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadFailedTitle" xml:space="preserve">
+    <value>Could not load profile</value>
+  </data>
+  <data name="Search_Header" xml:space="preserve">
+    <value>Search tweaks</value>
+  </data>
+  <data name="Search_PlaceholderText" xml:space="preserve">
+    <value>Search by name, description or category...</value>
+  </data>
+  <data name="TweakRow_RestartRequiredBadge" xml:space="preserve">
+    <value>Restart required</value>
+  </data>
+  <data name="TweakRow_PreviewButton" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="TweakRow_ApplyButton" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="TweakRow_RevertButton" xml:space="preserve">
+    <value>Revert</value>
+  </data>
+  <data name="TweakRow_PreviewTitle" xml:space="preserve">
+    <value>Preview: {0}</value>
+  </data>
+  <data name="TweakRow_PreviewNoChanges" xml:space="preserve">
+    <value>No changes would be made.</value>
+  </data>
+  <data name="TweakRow_PreviewFailedTitle" xml:space="preserve">
+    <value>Preview failed</value>
+  </data>
+  <data name="TweakRow_PreviewFailedMessage" xml:space="preserve">
+    <value>Could not preview '{0}': {1}</value>
+  </data>
+  <data name="TweakRow_SuccessTitle" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="TweakRow_SuccessMessage" xml:space="preserve">
+    <value>'{0}' was {1}.</value>
+  </data>
+  <data name="TweakRow_AppliedVerb" xml:space="preserve">
+    <value>applied</value>
+  </data>
+  <data name="TweakRow_RevertedVerb" xml:space="preserve">
+    <value>reverted</value>
+  </data>
+  <data name="TweakRow_ConflictTitle" xml:space="preserve">
+    <value>Conflict detected</value>
+  </data>
+  <data name="TweakRow_ConflictMessage" xml:space="preserve">
+    <value>'{0}' conflicts with another tweak: {1}</value>
+  </data>
+  <data name="TweakRow_FailedTitle" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="TweakRow_FailedMessage" xml:space="preserve">
+    <value>Could not apply '{0}': {1}</value>
+  </data>
+  <data name="RiskLevel_Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="RiskLevel_Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="RiskLevel_High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Settings_Header" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Settings_LanguageLabel" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings_LanguageDescription" xml:space="preserve">
+    <value>Choose the language used across the app. The change applies immediately.</value>
+  </data>
+</root>

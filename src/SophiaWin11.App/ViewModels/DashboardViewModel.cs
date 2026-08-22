@@ -15,6 +15,7 @@ public sealed partial class DashboardViewModel : ObservableObject
     private readonly IProfileService _profileService;
     private readonly ISnackbarService _snackbarService;
     private readonly ISessionService _sessionService;
+    private readonly ILocalizationService _localizationService;
 
     [ObservableProperty]
     private bool isLoading;
@@ -26,15 +27,17 @@ public sealed partial class DashboardViewModel : ObservableObject
     private int appliedTweaksCount;
 
     [ObservableProperty]
-    private string lastSessionSummary = "No session yet.";
+    private string lastSessionSummary;
 
-    public DashboardViewModel(ITweakService tweakService, IProfileService profileService, ISnackbarService snackbarService, ISessionService sessionService)
+    public DashboardViewModel(ITweakService tweakService, IProfileService profileService, ISnackbarService snackbarService, ISessionService sessionService, ILocalizationService localizationService)
     {
         _tweakService = tweakService;
         _profileService = profileService;
         _snackbarService = snackbarService;
         _sessionService = sessionService;
+        _localizationService = localizationService;
 
+        lastSessionSummary = _localizationService.GetString("Dashboard_LastSessionSummaryDefault");
         TotalTweaksCount = _tweakService.TweakCount;
 
         _ = RefreshAsync();
@@ -71,7 +74,7 @@ public sealed partial class DashboardViewModel : ObservableObject
     {
         var dialog = new SaveFileDialog
         {
-            Filter = "Sophia profile (*.sophiaprofile)|*.sophiaprofile",
+            Filter = $"{_localizationService.GetString("Dashboard_ProfileFileTypeName")} (*.sophiaprofile)|*.sophiaprofile",
             FileName = "profile.sophiaprofile",
         };
 
@@ -93,15 +96,15 @@ public sealed partial class DashboardViewModel : ObservableObject
             await _profileService.SaveProfileAsync(dialog.FileName, profile).ConfigureAwait(true);
 
             _snackbarService.Show(
-                "Profile saved",
-                $"Saved {appliedIds.Count} applied tweak(s) to '{Path.GetFileName(dialog.FileName)}'.",
+                _localizationService.GetString("Dashboard_SnackbarProfileSavedTitle"),
+                string.Format(_localizationService.GetString("Dashboard_SnackbarProfileSavedMessage"), appliedIds.Count, Path.GetFileName(dialog.FileName)),
                 ControlAppearance.Success,
                 TimeSpan.FromSeconds(3));
         }
         catch (Exception ex)
         {
             _snackbarService.Show(
-                "Could not save profile",
+                _localizationService.GetString("Dashboard_SnackbarProfileSaveFailedTitle"),
                 ex.Message,
                 ControlAppearance.Danger,
                 TimeSpan.FromSeconds(5));
@@ -113,7 +116,7 @@ public sealed partial class DashboardViewModel : ObservableObject
     {
         var dialog = new OpenFileDialog
         {
-            Filter = "Sophia profile (*.sophiaprofile)|*.sophiaprofile",
+            Filter = $"{_localizationService.GetString("Dashboard_ProfileFileTypeName")} (*.sophiaprofile)|*.sophiaprofile",
         };
 
         if (dialog.ShowDialog() != true)
@@ -145,15 +148,15 @@ public sealed partial class DashboardViewModel : ObservableObject
             await RefreshAsync().ConfigureAwait(true);
 
             _snackbarService.Show(
-                "Profile loaded",
-                $"Applied {appliedCount} of {profile.TweakIds.Count} tweak(s) from '{profile.Name}'.",
+                _localizationService.GetString("Dashboard_SnackbarProfileLoadedTitle"),
+                string.Format(_localizationService.GetString("Dashboard_SnackbarProfileLoadedMessage"), appliedCount, profile.TweakIds.Count, profile.Name),
                 ControlAppearance.Success,
                 TimeSpan.FromSeconds(3));
         }
         catch (TweakConflictException ex)
         {
             _snackbarService.Show(
-                "Profile has conflicting tweaks",
+                _localizationService.GetString("Dashboard_SnackbarProfileConflictTitle"),
                 ex.Message,
                 ControlAppearance.Caution,
                 TimeSpan.FromSeconds(6));
@@ -161,7 +164,7 @@ public sealed partial class DashboardViewModel : ObservableObject
         catch (Exception ex)
         {
             _snackbarService.Show(
-                "Could not load profile",
+                _localizationService.GetString("Dashboard_SnackbarProfileLoadFailedTitle"),
                 ex.Message,
                 ControlAppearance.Danger,
                 TimeSpan.FromSeconds(5));

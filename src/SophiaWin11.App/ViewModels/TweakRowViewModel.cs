@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SophiaWin11.Core.Abstractions;
@@ -8,10 +9,11 @@ using Wpf.Ui.Extensions;
 
 namespace SophiaWin11.App.ViewModels;
 
-public sealed partial class TweakRowViewModel : ObservableObject
+public sealed partial class TweakRowViewModel : ObservableObject, IDisposable
 {
     private readonly ISnackbarService _snackbarService;
     private readonly ISessionService _sessionService;
+    private readonly ILocalizationService _localizationService;
     private TweakSession? _appliedSession;
 
     [ObservableProperty]
@@ -33,11 +35,13 @@ public sealed partial class TweakRowViewModel : ObservableObject
 
     private CancellationTokenSource? resultResetCts;
 
-    public TweakRowViewModel(ITweak tweak, ISnackbarService snackbarService, ISessionService sessionService)
+    public TweakRowViewModel(ITweak tweak, ISnackbarService snackbarService, ISessionService sessionService, ILocalizationService localizationService)
     {
         Tweak = tweak;
         _snackbarService = snackbarService;
         _sessionService = sessionService;
+        _localizationService = localizationService;
+        PropertyChangedEventManager.AddHandler(_localizationService, OnLocalizationPropertyChanged, string.Empty);
     }
 
     public ITweak Tweak { get; }
@@ -53,6 +57,8 @@ public sealed partial class TweakRowViewModel : ObservableObject
     public string Category => Tweak.Category;
 
     public TweakRiskLevel RiskLevel => Tweak.RiskLevel;
+
+    public string RiskLevelDisplay => _localizationService.GetString($"RiskLevel_{RiskLevel}");
 
     public bool RequiresRestart => Tweak.RequiresRestart;
 
@@ -77,13 +83,13 @@ public sealed partial class TweakRowViewModel : ObservableObject
     [RelayCommand]
     private async Task ApplyAsync()
     {
-        await ExecuteAsync(ApplyThroughSessionAsync, "applied").ConfigureAwait(true);
+        await ExecuteAsync(ApplyThroughSessionAsync, _localizationService.GetString("TweakRow_AppliedVerb")).ConfigureAwait(true);
     }
 
     [RelayCommand]
     private async Task RevertAsync()
     {
-        await ExecuteAsync(RevertThroughSessionAsync, "reverted").ConfigureAwait(true);
+        await ExecuteAsync(RevertThroughSessionAsync, _localizationService.GetString("TweakRow_RevertedVerb")).ConfigureAwait(true);
     }
 
     [RelayCommand]
@@ -99,16 +105,16 @@ public sealed partial class TweakRowViewModel : ObservableObject
             var preview = await Tweak.PreviewAsync().ConfigureAwait(true);
 
             _snackbarService.Show(
-                $"Preview: {Name}",
-                string.IsNullOrWhiteSpace(preview) ? "No changes would be made." : preview,
+                string.Format(_localizationService.GetString("TweakRow_PreviewTitle"), Name),
+                string.IsNullOrWhiteSpace(preview) ? _localizationService.GetString("TweakRow_PreviewNoChanges") : preview,
                 ControlAppearance.Info,
                 TimeSpan.FromSeconds(8));
         }
         catch (Exception ex)
         {
             _snackbarService.Show(
-                "Preview failed",
-                $"Could not preview '{Name}': {ex.Message}",
+                _localizationService.GetString("TweakRow_PreviewFailedTitle"),
+                string.Format(_localizationService.GetString("TweakRow_PreviewFailedMessage"), Name, ex.Message),
                 ControlAppearance.Danger,
                 TimeSpan.FromSeconds(5));
         }
@@ -153,8 +159,8 @@ public sealed partial class TweakRowViewModel : ObservableObject
             await RefreshStateAsync().ConfigureAwait(true);
 
             _snackbarService.Show(
-                "Success",
-                $"'{Name}' was {pastTenseVerb}.",
+                _localizationService.GetString("TweakRow_SuccessTitle"),
+                string.Format(_localizationService.GetString("TweakRow_SuccessMessage"), Name, pastTenseVerb),
                 ControlAppearance.Success,
                 TimeSpan.FromSeconds(3));
 
@@ -164,8 +170,8 @@ public sealed partial class TweakRowViewModel : ObservableObject
         catch (TweakConflictException ex)
         {
             _snackbarService.Show(
-                "Conflict detected",
-                $"'{Name}' conflicts with another tweak: {ex.Message}",
+                _localizationService.GetString("TweakRow_ConflictTitle"),
+                string.Format(_localizationService.GetString("TweakRow_ConflictMessage"), Name, ex.Message),
                 ControlAppearance.Caution,
                 TimeSpan.FromSeconds(6));
 
@@ -175,8 +181,8 @@ public sealed partial class TweakRowViewModel : ObservableObject
         catch (Exception ex)
         {
             _snackbarService.Show(
-                "Failed",
-                $"Could not apply '{Name}': {ex.Message}",
+                _localizationService.GetString("TweakRow_FailedTitle"),
+                string.Format(_localizationService.GetString("TweakRow_FailedMessage"), Name, ex.Message),
                 ControlAppearance.Danger,
                 TimeSpan.FromSeconds(5));
 
@@ -212,5 +218,18 @@ public sealed partial class TweakRowViewModel : ObservableObject
         ShowSuccessIndicator = false;
         ShowFailureIndicator = false;
         ShowActionButtons = true;
+    }
+
+    private void OnLocalizationPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ILocalizationService.CurrentCulture))
+        {
+            OnPropertyChanged(nameof(RiskLevelDisplay));
+        }
+    }
+
+    public void Dispose()
+    {
+        PropertyChangedEventManager.RemoveHandler(_localizationService, OnLocalizationPropertyChanged, string.Empty);
     }
 }

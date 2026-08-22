@@ -1,6 +1,8 @@
 # Sophia Script for Win11
 
-[![Version](https://img.shields.io/badge/version-1.0.0.0-D4AF37?style=flat-square)](https://github.com/Patrickjaillet/sophia-win11/releases/tag/v1.0.0.0)
+**Languages:** [English](README.md) | [Français](README.fr.md) | [Deutsch](README.de.md) | [Русский](README.ru.md) | [Українська](README.uk.md)
+
+[![Version](https://img.shields.io/badge/version-1.1.0.0-D4AF37?style=flat-square)](https://github.com/Patrickjaillet/sophia-win11/releases/tag/v1.1.0.0)
 [![License](https://img.shields.io/badge/license-MIT-D4AF37?style=flat-square)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%2011-D4AF37?style=flat-square)](#requirements)
 

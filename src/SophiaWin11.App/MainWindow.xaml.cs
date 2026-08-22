@@ -23,6 +23,7 @@ public partial class MainWindow : FluentWindow
 
         snackbarService.SetSnackbarPresenter(RootSnackbarPresenter);
         _viewModel.NavigationRequested += OnNavigationRequested;
+        _viewModel.LanguageChanged += OnNavigationRequested;
 
         Loaded += OnLoaded;
     }
@@ -45,6 +46,14 @@ public partial class MainWindow : FluentWindow
         if (tag == ShellViewModel.SearchTag)
         {
             var page = _serviceProvider.GetRequiredService<SearchPage>();
+            RootNavigation.ReplaceContent(page);
+            PageTransitions.Enter(page);
+            return;
+        }
+
+        if (tag == ShellViewModel.SettingsTag)
+        {
+            var page = _serviceProvider.GetRequiredService<SettingsPage>();
             RootNavigation.ReplaceContent(page);
             PageTransitions.Enter(page);
             return;

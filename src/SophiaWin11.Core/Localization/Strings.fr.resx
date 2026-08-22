@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Nav_Dashboard" xml:space="preserve">
+    <value>Tableau de bord</value>
+  </data>
+  <data name="Nav_Search" xml:space="preserve">
+    <value>Rechercher</value>
+  </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="Shell_StatusLoading" xml:space="preserve">
+    <value>Chargement du catalogue de réglages...</value>
+  </data>
+  <data name="Shell_StatusLoaded" xml:space="preserve">
+    <value>{0} réglages chargés dans {1} catégories.</value>
+  </data>
+  <data name="Shell_StatusLoadFailed" xml:space="preserve">
+    <value>Échec du chargement du catalogue de réglages : {0}</value>
+  </data>
+  <data name="Shell_SnackbarStartupFailedTitle" xml:space="preserve">
+    <value>Échec du démarrage</value>
+  </data>
+  <data name="Shell_SnackbarStartupFailedMessage" xml:space="preserve">
+    <value>Le catalogue de réglages n&apos;a pas pu être chargé. Consultez le journal pour plus de détails.</value>
+  </data>
+  <data name="Dashboard_Header" xml:space="preserve">
+    <value>Tableau de bord</value>
+  </data>
+  <data name="Dashboard_TotalTweaksLabel" xml:space="preserve">
+    <value>Total des réglages</value>
+  </data>
+  <data name="Dashboard_CurrentlyAppliedLabel" xml:space="preserve">
+    <value>Actuellement appliqués</value>
+  </data>
+  <data name="Dashboard_LastSessionHeader" xml:space="preserve">
+    <value>Dernière session</value>
+  </data>
+  <data name="Dashboard_LastSessionBody" xml:space="preserve">
+    <value>L&apos;historique des sessions n&apos;est pas encore conservé entre les redémarrages de l&apos;application. L&apos;application de réglages depuis ce tableau de bord ou une page de catégorie met immédiatement à jour les compteurs ci-dessus.</value>
+  </data>
+  <data name="Dashboard_LastSessionSummaryDefault" xml:space="preserve">
+    <value>Aucune session pour le moment.</value>
+  </data>
+  <data name="Dashboard_ProfilesHeader" xml:space="preserve">
+    <value>Profils</value>
+  </data>
+  <data name="Dashboard_ProfilesDescription" xml:space="preserve">
+    <value>Enregistrez les réglages actuellement appliqués dans un fichier .sophiaprofile, ou appliquez-en un de nouveau.</value>
+  </data>
+  <data name="Dashboard_LoadProfileButton" xml:space="preserve">
+    <value>Charger un profil</value>
+  </data>
+  <data name="Dashboard_SaveProfileButton" xml:space="preserve">
+    <value>Enregistrer le profil</value>
+  </data>
+  <data name="Dashboard_RefreshButton" xml:space="preserve">
+    <value>Actualiser</value>
+  </data>
+  <data name="Dashboard_ProfileFileTypeName" xml:space="preserve">
+    <value>Profil Sophia</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSavedTitle" xml:space="preserve">
+    <value>Profil enregistré</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSavedMessage" xml:space="preserve">
+    <value>{0} réglage(s) appliqué(s) enregistré(s) dans « {1} ».</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileSaveFailedTitle" xml:space="preserve">
+    <value>Impossible d&apos;enregistrer le profil</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadedTitle" xml:space="preserve">
+    <value>Profil chargé</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadedMessage" xml:space="preserve">
+    <value>{0} réglage(s) sur {1} appliqué(s) depuis « {2} ».</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileConflictTitle" xml:space="preserve">
+    <value>Le profil contient des réglages en conflit</value>
+  </data>
+  <data name="Dashboard_SnackbarProfileLoadFailedTitle" xml:space="preserve">
+    <value>Impossible de charger le profil</value>
+  </data>
+  <data name="Search_Header" xml:space="preserve">
+    <value>Rechercher des réglages</value>
+  </data>
+  <data name="Search_PlaceholderText" xml:space="preserve">
+    <value>Rechercher par nom, description ou catégorie...</value>
+  </data>
+  <data name="TweakRow_RestartRequiredBadge" xml:space="preserve">
+    <value>Redémarrage requis</value>
+  </data>
+  <data name="TweakRow_PreviewButton" xml:space="preserve">
+    <value>Aperçu</value>
+  </data>
+  <data name="TweakRow_ApplyButton" xml:space="preserve">
+    <value>Appliquer</value>
+  </data>
+  <data name="TweakRow_RevertButton" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="TweakRow_PreviewTitle" xml:space="preserve">
+    <value>Aperçu : {0}</value>
+  </data>
+  <data name="TweakRow_PreviewNoChanges" xml:space="preserve">
+    <value>Aucune modification ne serait effectuée.</value>
+  </data>
+  <data name="TweakRow_PreviewFailedTitle" xml:space="preserve">
+    <value>Échec de l&apos;aperçu</value>
+  </data>
+  <data name="TweakRow_PreviewFailedMessage" xml:space="preserve">
+    <value>Impossible de prévisualiser « {0} » : {1}</value>
+  </data>
+  <data name="TweakRow_SuccessTitle" xml:space="preserve">
+    <value>Succès</value>
+  </data>
+  <data name="TweakRow_SuccessMessage" xml:space="preserve">
+    <value>« {0} » a été {1}.</value>
+  </data>
+  <data name="TweakRow_AppliedVerb" xml:space="preserve">
+    <value>appliqué</value>
+  </data>
+  <data name="TweakRow_RevertedVerb" xml:space="preserve">
+    <value>annulé</value>
+  </data>
+  <data name="TweakRow_ConflictTitle" xml:space="preserve">
+    <value>Conflit détecté</value>
+  </data>
+  <data name="TweakRow_ConflictMessage" xml:space="preserve">
+    <value>« {0} » est en conflit avec un autre réglage : {1}</value>
+  </data>
+  <data name="TweakRow_FailedTitle" xml:space="preserve">
+    <value>Échec</value>
+  </data>
+  <data name="TweakRow_FailedMessage" xml:space="preserve">
+    <value>Impossible d&apos;appliquer « {0} » : {1}</value>
+  </data>
+  <data name="RiskLevel_Low" xml:space="preserve">
+    <value>Faible</value>
+  </data>
+  <data name="RiskLevel_Medium" xml:space="preserve">
+    <value>Moyen</value>
+  </data>
+  <data name="RiskLevel_High" xml:space="preserve">
+    <value>Élevé</value>
+  </data>
+  <data name="Settings_Header" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="Settings_LanguageLabel" xml:space="preserve">
+    <value>Langue</value>
+  </data>
+  <data name="Settings_LanguageDescription" xml:space="preserve">
+    <value>Choisissez la langue utilisée dans toute l&apos;application. Le changement s&apos;applique immédiatement.</value>
+  </data>
+</root>

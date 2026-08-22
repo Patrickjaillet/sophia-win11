@@ -5,6 +5,10 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/) (4-segment: `MAJOR.MINOR.PATCH.BUILD`).
 
+## [1.1.0.0] - 2026-08-22
+
+The app is now available in French, German, Russian, and Ukrainian, alongside English. On first launch it automatically picks up your Windows display language if it's one of these five; otherwise it starts in English. You can change the language at any time from the new Settings page, and the switch applies immediately across the whole app — no restart needed. This includes every button, label, and message in the interface, as well as all 97 tweak names, descriptions, and categories. The project's documentation (README) is now also available in all five languages, with a language switcher at the top of each page.
+
 ## [1.0.0.0] - 2026-08-22
 
 Release candidate: feature freeze (v0.3.0.0 → v0.5.0.0 portage, v0.6.0.0 → v0.9.0.0 UI/theme/animation), full codebase review, and bug-fix pass. Zero residual comments, zero hardcoded visual values outside the theme dictionaries, project-wide.

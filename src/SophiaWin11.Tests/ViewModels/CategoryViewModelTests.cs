@@ -15,7 +15,7 @@ public sealed class CategoryViewModelTests
             new FakeTweak("Gaming", "A", "descA", initiallyApplied: true),
             new FakeTweak("Gaming", "B", "descB", initiallyApplied: false),
         };
-        var viewModel = new CategoryViewModel("Gaming", tweaks, new FakeSnackbarService(), new FakeSessionService());
+        var viewModel = new CategoryViewModel("Gaming", tweaks, new FakeSnackbarService(), new FakeSessionService(), new FakeLocalizationService());
 
         await viewModel.LoadAsync();
 
@@ -28,7 +28,7 @@ public sealed class CategoryViewModelTests
     public async Task ApplyCommand_CallsApplyAndUpdatesRowState()
     {
         var tweak = new FakeTweak("Gaming", "A", "descA", initiallyApplied: false);
-        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), new FakeSessionService());
+        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), new FakeSessionService(), new FakeLocalizationService());
         await viewModel.LoadAsync();
 
         await viewModel.Tweaks[0].ApplyCommand.ExecuteAsync(null);
@@ -41,7 +41,7 @@ public sealed class CategoryViewModelTests
     public async Task RevertCommand_CallsRevertAndUpdatesRowState()
     {
         var tweak = new FakeTweak("Gaming", "A", "descA", initiallyApplied: true);
-        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), new FakeSessionService());
+        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), new FakeSessionService(), new FakeLocalizationService());
         await viewModel.LoadAsync();
 
         await viewModel.Tweaks[0].RevertCommand.ExecuteAsync(null);
@@ -55,7 +55,7 @@ public sealed class CategoryViewModelTests
     {
         var tweak = new FakeTweak("Gaming", "A", "descA") { ThrowOnApply = true };
         var snackbar = new FakeSnackbarService();
-        var viewModel = new CategoryViewModel("Gaming", [tweak], snackbar, new FakeSessionService());
+        var viewModel = new CategoryViewModel("Gaming", [tweak], snackbar, new FakeSessionService(), new FakeLocalizationService());
         await viewModel.LoadAsync();
 
         await viewModel.Tweaks[0].ApplyCommand.ExecuteAsync(null);
@@ -69,7 +69,7 @@ public sealed class CategoryViewModelTests
     {
         var tweak = new FakeTweak("Gaming", "A", "descA", initiallyApplied: false);
         var sessionService = new FakeSessionService();
-        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), sessionService);
+        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), sessionService, new FakeLocalizationService());
         await viewModel.LoadAsync();
 
         await viewModel.Tweaks[0].ApplyCommand.ExecuteAsync(null);
@@ -84,7 +84,7 @@ public sealed class CategoryViewModelTests
     {
         var tweak = new FakeTweak("Gaming", "A", "descA", initiallyApplied: false);
         var sessionService = new FakeSessionService();
-        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), sessionService);
+        var viewModel = new CategoryViewModel("Gaming", [tweak], new FakeSnackbarService(), sessionService, new FakeLocalizationService());
         await viewModel.LoadAsync();
 
         await viewModel.Tweaks[0].ApplyCommand.ExecuteAsync(null);
@@ -104,7 +104,7 @@ public sealed class CategoryViewModelTests
             ConflictsToThrow = [new TweakConflict(tweak, other, "mutually exclusive")],
         };
         var snackbar = new FakeSnackbarService();
-        var viewModel = new CategoryViewModel("Gaming", [tweak], snackbar, sessionService);
+        var viewModel = new CategoryViewModel("Gaming", [tweak], snackbar, sessionService, new FakeLocalizationService());
         await viewModel.LoadAsync();
 
         await viewModel.Tweaks[0].ApplyCommand.ExecuteAsync(null);
@@ -119,7 +119,7 @@ public sealed class CategoryViewModelTests
     {
         var tweak = new FakeTweak("Gaming", "A", "descA");
         var snackbar = new FakeSnackbarService();
-        var viewModel = new CategoryViewModel("Gaming", [tweak], snackbar, new FakeSessionService());
+        var viewModel = new CategoryViewModel("Gaming", [tweak], snackbar, new FakeSessionService(), new FakeLocalizationService());
         await viewModel.LoadAsync();
 
         await viewModel.Tweaks[0].PreviewCommand.ExecuteAsync(null);

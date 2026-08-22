@@ -4,6 +4,7 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:converters="clr-namespace:SophiaWin11.App.Converters"
              xmlns:uicontrols="clr-namespace:SophiaWin11.UI.Controls;assembly=SophiaWin11.UI"
+             xmlns:loc="clr-namespace:SophiaWin11.App.Localization"
              Margin="0,0,0,8">
 
     <ui:CardControl>
@@ -27,7 +28,7 @@
                     <Border Background="{Binding RiskLevel, Converter={StaticResource RiskLevelToBrushConverter}}"
                             CornerRadius="{DynamicResource RadiusCard}"
                             Padding="6,2">
-                        <TextBlock Text="{Binding RiskLevel}"
+                        <TextBlock Text="{Binding RiskLevelDisplay}"
                                    FontSize="{DynamicResource FontSizeCaption}"
                                    Foreground="{DynamicResource BrushTextOnAccent}" />
                     </Border>
@@ -37,7 +38,7 @@
                             Margin="8,0,0,0"
                             VerticalAlignment="Center"
                             Visibility="{Binding RequiresRestart, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <TextBlock Text="Restart required"
+                        <TextBlock Text="{loc:Translate Key=TweakRow_RestartRequiredBadge}"
                                    FontFamily="{DynamicResource FontFamilyBody}"
                                    FontSize="{DynamicResource FontSizeCaption}"
                                    Foreground="{DynamicResource BrushTextOnAccent}" />
@@ -69,14 +70,14 @@
                                                   Visibility="{Binding ShowFailureIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <StackPanel Orientation="Horizontal"
                         Visibility="{Binding ShowActionButtons, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <ui:Button Content="Preview"
+                <ui:Button Content="{loc:Translate Key=TweakRow_PreviewButton}"
                            Command="{Binding PreviewCommand}" />
-                <ui:Button Content="Apply"
+                <ui:Button Content="{loc:Translate Key=TweakRow_ApplyButton}"
                            Appearance="Primary"
                            Margin="8,0,0,0"
                            Command="{Binding ApplyCommand}"
                            Visibility="{Binding IsApplied, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                <ui:Button Content="Revert"
+                <ui:Button Content="{loc:Translate Key=TweakRow_RevertButton}"
                            Margin="8,0,0,0"
                            Command="{Binding RevertCommand}"
                            Visibility="{Binding IsApplied, Converter={StaticResource BooleanToVisibilityConverter}}" />

@@ -17,7 +17,7 @@ public sealed class SearchViewModelTests
     [Fact]
     public void Construction_EmptyQuery_ShowsAllTweaks()
     {
-        var viewModel = new SearchViewModel(CreateTweakService(), new FakeSnackbarService(), new FakeSessionService());
+        var viewModel = new SearchViewModel(CreateTweakService(), new FakeSnackbarService(), new FakeSessionService(), new FakeLocalizationService());
 
         Assert.Equal(3, viewModel.Results.Count);
     }
@@ -25,7 +25,7 @@ public sealed class SearchViewModelTests
     [Fact]
     public void SettingQuery_FiltersResultsLive()
     {
-        var viewModel = new SearchViewModel(CreateTweakService(), new FakeSnackbarService(), new FakeSessionService())
+        var viewModel = new SearchViewModel(CreateTweakService(), new FakeSnackbarService(), new FakeSessionService(), new FakeLocalizationService())
         {
             Query = "theme",
         };
@@ -37,7 +37,7 @@ public sealed class SearchViewModelTests
     [Fact]
     public void SettingQuery_NoMatches_ClearsResults()
     {
-        var viewModel = new SearchViewModel(CreateTweakService(), new FakeSnackbarService(), new FakeSessionService())
+        var viewModel = new SearchViewModel(CreateTweakService(), new FakeSnackbarService(), new FakeSessionService(), new FakeLocalizationService())
         {
             Query = "doesnotexistanywhere",
         };
@@ -48,7 +48,7 @@ public sealed class SearchViewModelTests
     [Fact]
     public void ClearingQuery_RestoresAllResults()
     {
-        var viewModel = new SearchViewModel(CreateTweakService(), new FakeSnackbarService(), new FakeSessionService())
+        var viewModel = new SearchViewModel(CreateTweakService(), new FakeSnackbarService(), new FakeSessionService(), new FakeLocalizationService())
         {
             Query = "theme",
         };

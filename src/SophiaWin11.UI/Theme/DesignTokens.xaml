@@ -39,7 +39,7 @@
     <Thickness x:Key="BorderThicknessThin">1</Thickness>
     <system:Double x:Key="ChevronCornerSize">10</system:Double>
 
-    <FontFamily x:Key="FontFamilyDisplay">pack://application:,,,/SophiaWin11.UI;component/Assets/Fonts/#Cinzel Decorative</FontFamily>
+    <FontFamily x:Key="FontFamilyDisplay">pack://application:,,,/SophiaWin11.UI;component/Assets/Fonts/#Cinzel Decorative, Segoe UI</FontFamily>
     <FontFamily x:Key="FontFamilyDisplayAccent">pack://application:,,,/SophiaWin11.UI;component/Assets/Fonts/#Poiret One</FontFamily>
     <FontFamily x:Key="FontFamilyBody">pack://application:,,,/SophiaWin11.UI;component/Assets/Fonts/#Inter</FontFamily>
 
